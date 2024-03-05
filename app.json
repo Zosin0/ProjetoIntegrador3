@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "fast-ticket",
+    "slug": "fast-ticket",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "fast-ticket"
+}

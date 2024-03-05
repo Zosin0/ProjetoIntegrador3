@@ -1,25 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Fast Ticket</Text>
+      <Text style={styles.title}>Fast Ticket</Text>
       <Button 
-        title="Clique aqui"
+        title="Pagar Ticket"
         onPress={() => alert('Botão pressionado!')}
       />
-      <StatusBar style="auto" />
+      <View style={styles.navBar}>
+        {/* Aqui você pode adicionar os botões da sua barra de navegação */}
+      </View>
     </View>
-  );  
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'blue',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontSize: 24,
+    margin: 50,
+  },
+  navBar: {
+    height: 60,
+    backgroundColor: '#eee',
+    width: '100%',
+    borderTopWidth: 1,
+    borderColor: '#ccc',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });

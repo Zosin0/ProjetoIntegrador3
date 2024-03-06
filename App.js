@@ -10,8 +10,7 @@ const App = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/exemplo');
-      const json = await response.json();
+      const response = await fetch('http://192.168.252.24:5000/api/exemplo');      const json = await response.json();
       setDados(json);
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   title: {
     fontSize: 24,

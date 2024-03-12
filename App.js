@@ -1,40 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const App = () => {
-  const [dados, setDados] = useState(null);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://192.168.252.24:5000/api/exemplo');      const json = await response.json();
-      setDados(json);
-    } catch (error) {
-      console.error('Erro ao buscar dados:', error);
-    }
-  };
-
+const EstacionamentosScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Fast Ticket</Text>
-      <Button 
-        title="Pagar Ticket"
-        onPress={() => alert('Botão pressionado!')}
-      />
-      <View style={styles.navBar}>
-        {/* Aqui você pode adicionar os botões da sua barra de navegação */}
-      </View>
-      <Text style={styles.apiTitle}>Dados da API Flask:</Text>
-      {dados ? (
-        <Text style={styles.apiData}>{dados.mensagem}</Text>
-      ) : (
-        <Text style={styles.loadingText}>Carregando...</Text>
-      )}
-      <Button title="Recarregar Dados" onPress={fetchData} />
+      <Text style={styles.title}>Estacionamentos Disponíveis</Text>
+      {/* Aqui você pode listar os estacionamentos disponíveis */}
     </View>
+  );
+};
+
+const QRCodeScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Gerar QR Code</Text>
+      {/* Aqui você pode adicionar a funcionalidade para gerar o QR Code */}
+    </View>
+  );
+};
+
+const PagarContaScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Pagar Conta</Text>
+      {/* Aqui você pode adicionar a funcionalidade para pagar a conta */}
+    </View>
+  );
+};
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Estacionamentos" component={EstacionamentosScreen} />
+        <Tab.Screen name="QRCode" component={QRCodeScreen} />
+        <Tab.Screen name="PagarConta" component={PagarContaScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -48,28 +54,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     margin: 50,
-  },
-  navBar: {
-    height: 60,
-    backgroundColor: '#eee',
-    width: '100%',
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  apiTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  apiData: {
-    fontSize: 16,
-    color: 'blue',
-  },
-  loadingText: {
-    fontSize: 16,
-    fontStyle: 'italic',
   },
 });
 

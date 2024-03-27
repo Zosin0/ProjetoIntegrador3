@@ -24,9 +24,9 @@ const App = () => {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("/assets/images/background1.png")} resizeMode="cover" style={styles.background}>
+      <ImageBackground source={require("./assets/images/background1.png")} resizeMode="cover" style={styles.background}>
         <View style={styles.content}>
-          <Image source={require("/assets/images/logo.png")} style={styles.logo} />
+          <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
         </View>

@@ -72,8 +72,8 @@ const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
 const styles = StyleSheet.create({
   containerForm: {
     backgroundColor: 'white',
-    width: 350,
-    height: 680,
+    width: 300,
+    height: 630,
     textAlign: 'center',
     alignItems: 'center',
     padding: 40,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     color: '#5B5C5D',
     padding: 30,
     top: 30,
-    fontSize: 13,
+    fontSize: 12,
   },
   inputtop: {
     width: '100%',

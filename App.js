@@ -76,7 +76,7 @@ const DeveloperModeStack = () => {
 
 const App = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
-  const [developerMode, setDeveloperMode] = useState(true); // Estado para controlar o modo de desenvolvedor
+  const [developerMode, setDeveloperMode] = useState(false); // Estado para controlar o modo de desenvolvedor
 
   useEffect(() => {
     // Aqui você pode verificar se o usuário está autenticado de alguma forma, por exemplo, verificando se há um token de autenticação armazenado no dispositivo

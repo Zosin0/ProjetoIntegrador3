@@ -17,10 +17,10 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('/assets/images/background.jpg')} style={styles.backgroundImage} />
+      <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} />
 
       <View style={styles.content}>
-        <Image source={require('/assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('../assets/images/logo.png')} style={styles.logo} />
         <Text style={styles.title}>Você no estacionamento:</Text>
 
         <TouchableOpacity style={styles.button} onPress={getLocation}>

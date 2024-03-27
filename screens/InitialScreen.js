@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground } from 'react-native'; // Adicione ImageBackground aqui
+
+import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 const InitialScreen = () => {
@@ -15,19 +17,17 @@ const InitialScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require('/assets/images/logo.png')}
-        style={styles.logo}
-      />
-      <TouchableOpacity style={[styles.button, { bottom: 100 }]} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={[styles.button, { bottom: 50 }]} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
-  );
+      <ImageBackground source={require("../assets/images/background1.png")} resizeMode="cover" style={styles.background}>
+        <View style={styles.content}>
+          <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText}>Login</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText}>Registre-se</Button>
+        </View>
+      </ImageBackground>
+    </View>);
 };
+
+// Definir navigationOptions para ocultar a barra de navegação
 
 // Definir navigationOptions para ocultar a barra de navegação
 InitialScreen.navigationOptions = {
@@ -37,27 +37,33 @@ InitialScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white', // Define o fundo da tela como branco
   },
   logo: {
-    width: 200,
-    height: 200,
-    resizeMode: 'contain',
-    marginBottom: 250, // Aumenta o espaçamento entre a logo e os botões
+    width: 300,
+    height: 180,
+    bottom: 90,
   },
   button: {
-    backgroundColor: '#FCE77B',
-    paddingVertical: 10,
-    marginBottom: 20, 
-    paddingHorizontal: 20,
+    backgroundColor: '#FFD643',
+    marginTop: 30, // Adjust spacing between buttons and logo/text as needed
+    width: 200, // Adjust width of the buttons as needed
     borderRadius: 5,
+    padding: 10,
+    bottom: -150,
   },
   buttonText: {
-    color: '#212529',
-    fontSize: 18,
+    color: 'black', // Change text color to black
   },
+
 });
 
 export default InitialScreen;

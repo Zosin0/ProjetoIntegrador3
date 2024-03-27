@@ -1,108 +1,69 @@
-import React, { useState, useEffect } from 'react';
+// App.js
+import React from 'react';
+import { View, Image, StyleSheet, ImageBackground } from 'react-native';
+import { Button } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Button, View } from 'react-native'; // Corrija a importação do Button para 'react-native'
-
-// Importe todas as telas aqui
-import EstacionamentosScreen from './screens/EstacionamentosScreen';
-import PagarContaScreen from './screens/PagarConta';
-import QRCodeScreen from './screens/QRCodeScreen';
-import InitialScreen from './screens/InitialScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import LogoutScreen from './screens/LogoutScreen';
 
-// Importe as novas telas
-import HomeScreen from './screens/Home';
-import SessionScreen from './screens/Session';
-import PaymentsScreen from './screens/Payments';
-import PaySteps from './screens/Pay';
-
-
-
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const DeveloperModeScreen = ({ navigation }) => {
-  // Função para navegar para uma tela específica
-  const navigateToScreen = (screenName) => {
-    navigation.navigate(screenName);
-  };
-
+const App = () => {
   return (
-    <View>
-      {/* Botões para cada tela */}
-      <Button title="Estacionamentos" onPress={() => navigateToScreen('Estacionamentos')} />
-      <Button title="Pagar Conta" onPress={() => navigateToScreen('PagarConta')} />
-      <Button title="QR Code" onPress={() => navigateToScreen('QRCode')} />
-      <Button title="Initial" onPress={() => navigateToScreen('Initial')} />
-      <Button title="Login" onPress={() => navigateToScreen('Login')} />
-      <Button title="Register" onPress={() => navigateToScreen('Register')} />
-      <Button title="Logout" onPress={() => navigateToScreen('Logout')} />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
-      {/* Adicione os botões para as novas telas */}
-      <Button title="Inicial" onPress={() => navigateToScreen('HomeScreen')} />
-      <Button title="Sessao" onPress={() => navigateToScreen('SessionScreen')} />
-      <Button title="Pagamentos" onPress={() => navigateToScreen('PaymentsScreen')} />
-      <Button title="PagamentoFluxo" onPress={() => navigateToScreen('PaymentFlow')} />
-
+const HomeScreen = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={require("/assets/images/background1.png")} resizeMode="cover" style={styles.background}>
+        <View style={styles.content}>
+          <Image source={require("/assets/images/logo.png")} style={styles.logo} />
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
 
-const DeveloperModeStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="DeveloperMode" component={DeveloperModeScreen} />
-      {/* Adicione aqui as telas que você deseja acessar no modo desenvolvedor */}
-      <Stack.Screen name="Estacionamentos" component={EstacionamentosScreen} />
-      <Stack.Screen name="PagarConta" component={PagarContaScreen} />
-      <Stack.Screen name="QRCode" component={QRCodeScreen} />
-      <Stack.Screen name="Initial" component={InitialScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Logout" component={LogoutScreen} />
-
-      {/* Adicione as novas telas ao StackNavigator */}
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="SessionScreen" component={SessionScreen} />
-      <Stack.Screen name="PaymentsScreen" component={PaymentsScreen} />
-      <Stack.Screen name="PagamentoFluxo" component={PaySteps} />
-
-    </Stack.Navigator>
-  );
-};
-
-const App = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
-  const [developerMode, setDeveloperMode] = useState(false); // Estado para controlar o modo de desenvolvedor
-
-  useEffect(() => {
-    // Aqui você pode verificar se o usuário está autenticado de alguma forma, por exemplo, verificando se há um token de autenticação armazenado no dispositivo
-    const userLoggedIn = false; // Simulação de verificação de autenticação
-    setIsUserLoggedIn(userLoggedIn);
-  }, []);
-
-  const handleDeveloperMode = () => {
-    // Função para ativar o modo de desenvolvedor
-    setDeveloperMode(true);
-  };
-
-  return (
-    <NavigationContainer>
-      {developerMode ? (
-        <DeveloperModeStack />
-      ) : (
-        <Tab.Navigator>
-          <Tab.Screen name="Initial" component={InitialScreen} />
-          <Tab.Screen name="Login" component={LoginScreen} />
-          <Tab.Screen name="Register" component={RegisterScreen} />
-          <Tab.Screen name="DeveloperMode" component={DeveloperModeStack} />
-        </Tab.Navigator>
-      )}
-    </NavigationContainer>
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  background: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 300,
+    height: 180,
+    bottom: 90,
+  },
+  button: {
+    backgroundColor: '#FFD643',
+    marginTop: 30,
+    width: 200,
+    borderRadius: 5,
+    padding: 10,
+    bottom: -150,
+  },
+  buttonText: {
+    color: 'black',
+  },
+});
 
 export default App;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Entypo } from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -11,9 +11,8 @@ const MenuHamburger = () => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.containerMenu}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>Park Pay</Text>
                 <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
                     <Entypo
                         name={isMenuOpen ? 'cross' : 'menu'}
@@ -24,6 +23,7 @@ const MenuHamburger = () => {
             </View>
             {isMenuOpen && (
                 <View style={styles.menuItems}>
+                    <Image source={require("../assets/images/logo.png")} style={styles.logo} />
                     <TouchableOpacity style={styles.menuItem}>
                         <Icon name="home" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Home</Text>
@@ -41,11 +41,11 @@ const MenuHamburger = () => {
                         <Text style={styles.menuItemText}>Histórico de estacionamento</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}>
-                    <Icon name="users" size={20} color={'#FFD643'} />
+                        <Icon name="users" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Meus perfis</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem}>
-                    <Icon name="cross" size={20} color={'#FFD643'} />
+                        <Icon name="cross" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Logout</Text>
                     </TouchableOpacity>
                 </View>
@@ -55,14 +55,21 @@ const MenuHamburger = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    logo: {
+        position: 'relative',
+        top: -50,
+        left: 150,
+        width: 80,
+        height: 50,
+    },
+    containerMenu: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: 37
+        marginTop: 37,
     },
     header: {
         height: 60,
-        backgroundColor: '#000',
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
         width: 250

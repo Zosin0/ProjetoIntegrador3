@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import MenuHamburger from './screens/menuHambuger';
+import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const App = () => {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="teste" component={MenuHamburger}/>
+        <Stack.Screen name="testes" component={CadastoPagamentoSccreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -32,6 +34,7 @@ const HomeScreen = ({ navigation }) => {
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('teste')}>teste</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('testes')}>testesss</Button>
         </View>
       </ImageBackground>
     </View>

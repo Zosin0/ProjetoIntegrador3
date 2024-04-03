@@ -101,3 +101,9 @@ Usuários logados podem:
 -   Pagamentos
     
 -   Sessão
+
+
+inciar o projeto
+Comandos
+# npm install
+

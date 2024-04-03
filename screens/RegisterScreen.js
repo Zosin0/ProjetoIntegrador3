@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import Icon from 'react-native-vector-icons/Entypo';
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({  }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');

@@ -24,7 +24,7 @@ const App = () => {
 const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ImageBackground source={require("./assets/images/background1.png")} resizeMode="cover" style={styles.background}>
+      <ImageBackground blurRadius={1.8} source={require("./assets/images/background_img.jpeg")} resizeMode="cover" style={styles.background}>
         <View style={styles.content}>
           <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     height: 180,
-    bottom: 90,
+    bottom: 50,
   },
   button: {
     backgroundColor: '#FFD643',
-    marginTop: 30,
+    marginTop: 20,
     width: 200,
     borderRadius: 5,
     padding: 10,

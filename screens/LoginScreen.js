@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/AntDesign'; // Importe o conjunto de ícones Ionicons
+
 
 const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
   const [email, setEmail] = useState('');
@@ -38,6 +40,11 @@ const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
       end={{ x: 0, y: 0 }}
       colors={['#FDDF76', '#172B4D']}>
 
+      <View style={styles.containerHeader}>
+        <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+          <Icon name="left" size={25} color={'white'} children={<Text style={styles.sla}>Login</Text>}/>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.containerForm}>
         <Image source={require('../assets/images/logo.png')} style={styles.logo} />
@@ -70,6 +77,18 @@ const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
 };
 
 const styles = StyleSheet.create({
+  containerHeader:{
+    borderRadius: 20,
+    left: -75,
+  },
+  voltar: { 
+    width: 200,
+    padding: 20,
+    justifyContent: 'flex-start'
+  },
+  sla:{
+    left: 10,
+  },
   containerForm: {
     backgroundColor: 'white',
     width: 300,

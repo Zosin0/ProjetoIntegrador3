@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importação do FontAwesome
 
-const HomeScreen = ({ navigation }) => {
+const Home = ({ navigation }) => {
   const getLocation = () => {
     // Lógica para obter a localização do usuário
   };
@@ -20,22 +20,25 @@ const HomeScreen = ({ navigation }) => {
       <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} />
 
       <View style={styles.content}>
-        <Image source={require('../assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
         <Text style={styles.title}>Você no estacionamento:</Text>
 
         <TouchableOpacity style={styles.button} onPress={getLocation}>
-          <FontAwesome name="location-arrow" size={20} color="black" style={styles.icon} />
+          <FontAwesome name="location-arrow" size={20} color="black" style={styles.icon} 
+          onPress={() => navigation.navigate('')}
+          />
           <Text style={styles.buttonText}>Pegar Localização</Text>
         </TouchableOpacity>
 
         <Text style={styles.title}>Opções:</Text>
         <TouchableOpacity style={styles.button} onPress={checkActiveSession}>
-          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
+          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} 
+          />
           <Text style={styles.buttonText}>Pagar Ticket</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Estacionamentos')}
+          onPress={() => navigation.navigate('Pay')}
         >
           <FontAwesome name="parking" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Estacionamentos Parceiros</Text>
@@ -100,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Home;

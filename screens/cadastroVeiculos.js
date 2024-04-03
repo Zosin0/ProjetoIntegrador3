@@ -1,43 +1,41 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
-import Icon from 'react-native-vector-icons/Entypo'; // Importe o conjunto de ícones Ionicons
+import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
 
 
 
-const CadastoPagamentoSccreen = ({ navigation }) => {
+const CadastoVeiculoSccreen = ({ navigation }) => {
     const [name, setName] = useState('');
-    const [cartao, setCartao] = useState('');
-    const [validade, setValidade] = useState('');
-    const [cvv, setCvv] = useState('');
-    const [cep, setCep] = useState('');
+    const [placa, setPlaca] = useState('');
+    const [marca, setMarca] = useState('');
+    const [Modelo, setModelo] = useState('');
+    const [ano, setAno] = useState('');
     const [complemento, setComplemento] = useState('');
 
     return (
         <View style={styles.containerForm}>
             <View style={styles.container}>
                 <View style={styles.head}>
-                    <Icon name="user" size={55} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
-                    <Text style={{fontWeight: 'bold', fontSize: 20}}>informações de Pagamento</Text>
+                    <Icon name="car" size={35} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
+                    <Text style={{fontWeight: 'bold', fontSize: 15}}>Cadastrar Carro</Text>
                 </View>
-                <Text>Nome Completo</Text>
-                <TextInput style={styles.input} placeholder="Nome Completo" value={name} onChangeText={setName} />
-                <Text> Número do Cartão </Text>
-                <TextInput style={styles.input} placeholder='1234 1234 1234 1234' value={cartao} onChange={setCartao} />
+                <Text>Apelido</Text>
+                <TextInput style={styles.input} placeholder="apelido" value={name} onChangeText={setName} />
+                <Text> Placa </Text>
+                <TextInput style={styles.input} placeholder='XXXXXXX' value={placa} onChange={setPlaca} />
                 <View style={styles.containerValidade}>
                     <View style={styles.box}>
-                        <Text> Validade </Text>
-                        <TextInput style={styles.inputDiferente} placeholder='MM/YY' value={validade} onChange={setValidade} />
+                        <Text> Marca </Text>
+                        <TextInput style={styles.inputDiferente} placeholder='XXXXXXXX' value={marca} onChange={setMarca} />
                     </View>
                     <View style={styles.box}>
-                        <Text> CVV </Text>
-                        <TextInput style={styles.inputDiferente} placeholder='***' value={cvv} onChange={setCvv} />
+                        <Text> Modelo </Text>
+                        <TextInput style={styles.inputDiferente} placeholder='***' value={Modelo} onChange={setModelo} />
                     </View>
                 </View>
-                <Text> CEP de cobrança </Text>
-                <TextInput style={styles.input} placeholder='00000-000' value={cep} onChange={setCep} />
-                <Text> Complemento/ Número </Text>
-                <TextInput style={styles.input} placeholder='00000-000' value={complemento} onChange={setComplemento} />
+                <Text> Ano </Text>
+                <TextInput style={styles.input} placeholder='MM/YY' value={ano} onChange={setAno} />
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
@@ -53,6 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     container: {
         backgroundColor: '#E2E6EE',
@@ -100,10 +99,10 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#FCE77B',
-        paddingVertical: 10,
+        paddingVertical: 5,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginBottom: 35,
+        marginBottom: 25,
         marginTop: 10,
         width: '100%'
     },
@@ -113,4 +112,4 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
 });
-export default CadastoPagamentoSccreen;
+export default CadastoVeiculoSccreen;

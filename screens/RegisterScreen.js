@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
     borderRadius: 10,
+    elevation: 5,
   },
   title: {
     marginBottom: 20,

@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import Home from './screens/Home';
+
 
 const Stack = createStackNavigator();
 
@@ -14,6 +16,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
@@ -34,6 +37,9 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
+
+
 
 const styles = StyleSheet.create({
   container: {

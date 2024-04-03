@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation = useNavigation(); // Use useNavigation hook to get navigation object
+
 
   const handleRegister = async () => {
     try {
@@ -16,9 +19,10 @@ const RegisterScreen = () => {
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/register', { email, password });
+      const response = await axios.post('http://localhost:5000/api/v1/register', { email, password });
       const data = response.data;
       if (data.success) {
+        navigation.navigate('Login')
         console.log('Usuário registrado com sucesso:', data.message);
       } else {
         console.error('Erro ao registrar:', data.message);

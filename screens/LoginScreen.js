@@ -3,26 +3,41 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
-const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
+const LoginScreen = ({ setIsUserLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation(); // Use useNavigation hook to get navigation object
 
   const handleLogin = async () => {
+  //   try {
+  //     const response = await axios.post('http://localhost:5000/api/v1/login', { email, password });
+  //     if (response && response.data && response.data.success) {
+  //       console.log('Usuário autenticado com sucesso:', response.data.message);
+  //       setIsUserLoggedIn(true); // Altera o estado para logado
+  //       navigation.navigate('HomeScreen');
+  //     } else {
+  //       console.error('Erro ao autenticar:', response.data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Erro ao autenticar:', error);
+  //   }
+  // };
     try {
-      const response = await axios.post('http://localhost:5000/login', { email, password });
+
+      const response = await axios.post('http://localhost:5000/api/v1/login', { email, password });
       const data = response.data;
       if (data.success) {
+        navigation.navigate('HomeScreen')
         console.log('Usuário autenticado com sucesso:', data.message);
-        setIsUserLoggedIn(true); // Altera o estado para logado
       } else {
-        console.error('Erro ao autenticar:', data.message);
+        console.error('Erro ao logar:', data.message);
       }
     } catch (error) {
-      console.error('Erro ao autenticar:', error);
+      console.error('Erro ao logar:', error);
     }
   };
-
 
   return (
     <LinearGradient

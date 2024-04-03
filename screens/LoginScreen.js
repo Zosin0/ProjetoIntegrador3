@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/AntDesign'; // Importe o conjunto de ícones Ionicons
+import Icon from 'react-native-vector-icons/Entypo'; // Importe o conjunto de ícones Ionicons
 
 
 const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation, setIsUserLoggedIn }) => {
 
       <View style={styles.containerHeader}>
         <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
-          <Icon name="left" size={25} color={'white'} children={<Text style={styles.sla}>Login</Text>}/>
+          <Icon name="chevron-left" size={25} color={'white'} children={<Text style={styles.sla}>Login</Text>}/>
         </TouchableOpacity>
       </View>
 

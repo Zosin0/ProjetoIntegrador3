@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Entypo';
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -82,7 +82,7 @@ const RegisterScreen = ({ navigation }) => {
 
       <View style={styles.containerHeader}>
         <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
-          <Icon name="left" size={25} color={'white'} children={<Text style={styles.sla}>Criar Conta</Text>} />
+          <Icon name="chevron-left" size={25} color={'white'} children={<Text style={styles.sla}>Criar Conta</Text>} />
         </TouchableOpacity>
       </View>
 

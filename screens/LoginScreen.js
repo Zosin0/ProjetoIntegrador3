@@ -4,6 +4,7 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'reac
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import Icon from 'react-native-vector-icons/Entypo'; // Importe o conjunto de ícones Ionicons
 
 const LoginScreen = ({ setIsUserLoggedIn }) => {
   const [email, setEmail] = useState('');
@@ -53,6 +54,11 @@ const LoginScreen = ({ setIsUserLoggedIn }) => {
       end={{ x: 0, y: 0 }}
       colors={['#FDDF76', '#172B4D']}>
 
+      <View style={styles.containerHeader}>
+        <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={25} color={'white'} children={<Text style={styles.sla}>Login</Text>}/>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.containerForm}>
         <Image source={require('../assets/images/logo.png')} style={styles.logo} />
@@ -85,6 +91,18 @@ const LoginScreen = ({ setIsUserLoggedIn }) => {
 };
 
 const styles = StyleSheet.create({
+  containerHeader:{
+    borderRadius: 20,
+    left: -75,
+  },
+  voltar: { 
+    width: 200,
+    padding: 20,
+    justifyContent: 'flex-start'
+  },
+  sla:{
+    left: 10,
+  },
   containerForm: {
     backgroundColor: 'white',
     width: 300,
@@ -105,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#black',
+    borderColor: '#000',
     borderRadius: 5,
     marginTop: 20
   },
@@ -114,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#black',
+    borderColor: '#000',
     borderRadius: 5,
     marginTop: 5
   },

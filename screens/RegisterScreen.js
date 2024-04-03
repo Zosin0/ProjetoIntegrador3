@@ -3,8 +3,9 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'reac
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import Icon from 'react-native-vector-icons/Entypo';
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -82,6 +83,13 @@ const RegisterScreen = () => {
       end={{ x: 0, y: 0 }}
       colors={['#FDDF76', '#172B4D']}
     >
+
+      <View style={styles.containerHeader}>
+        <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" size={25} color={'white'} children={<Text style={styles.sla}>Criar Conta</Text>} />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.container}>
         <Text style={styles.title}> Preencha seus dados</Text>
         <TextInput style={styles.inputtop} placeholder="Nome Completo" value={name} onChangeText={setName} />
@@ -101,6 +109,18 @@ const RegisterScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  containerHeader: {
+    borderRadius: 20,
+    left: -80,
+  },
+  voltar: {
+    width: 200,
+    padding: 20,
+    justifyContent: 'flex-start'
+  },
+  sla: {
+    left: 10,
+  },
   container: {
     backgroundColor: 'white',
     width: 320,
@@ -110,7 +130,7 @@ const styles = StyleSheet.create({
     padding: 40,
     borderRadius: 10,
   },
-  title:{
+  title: {
     marginBottom: 20,
   },
   inputtop: {
@@ -150,7 +170,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  strenght:{
+  strenght: {
     fontSize: 10,
   },
   errorText: {

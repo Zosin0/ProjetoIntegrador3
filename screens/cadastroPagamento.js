@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/Entypo'; // Importe o conjunto de ícones Ionicons
-
+import { Entypo } from 'react-native-vector-icons';
 
 
 const CadastoPagamentoSccreen = ({ navigation }) => {
@@ -13,12 +13,56 @@ const CadastoPagamentoSccreen = ({ navigation }) => {
     const [cep, setCep] = useState('');
     const [complemento, setComplemento] = useState('');
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <View style={styles.containerForm}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.menuButton} onPress={toggleMenu}>
+                    <Entypo
+                        name={isMenuOpen ? 'cross' : 'menu'}
+                        size={30}
+                        color={'#FFD643'}
+                    />
+                </TouchableOpacity>
+            </View>
+            {isMenuOpen && (
+                <View style={styles.menuItems}>
+                    <Image source={require("../assets/images/logo.png")} style={styles.logo} />
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="home" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Home</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="wallet" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Minhas formas de pagamento</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="traffic-cone" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Cadastrar veículo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="unread" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Histórico de estacionamento</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="users" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Meus perfis</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Icon name="cross" size={20} color={'#FFD643'} />
+                        <Text style={styles.menuItemText}>Logout</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             <View style={styles.container}>
                 <View style={styles.head}>
                     <Icon name="user" size={55} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
-                    <Text style={{fontWeight: 'bold', fontSize: 20}}>informações de Pagamento</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>informações de Pagamento</Text>
                 </View>
                 <Text>Nome Completo</Text>
                 <TextInput style={styles.input} placeholder="Nome Completo" value={name} onChangeText={setName} />
@@ -111,6 +155,63 @@ const styles = StyleSheet.create({
         color: '#212529',
         fontSize: 18,
         textAlign: 'center'
+    },
+
+
+    logo: {
+        position: 'relative',
+        top: -50,
+        left: 150,
+        width: 80,
+        height: 50,
+    },
+    containerMenu: {
+        flex: 1,
+        backgroundColor: '#fff',
+        marginTop: 17,
+    },
+    header: {
+        position: 'absolute',
+        zIndex: 1,
+        height: 700,
+        backgroundColor: '#white',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        width: 250,
+    },
+    headerText: {
+        color: '#fff',
+        fontSize: 20,
+    },
+    menuButton: {
+        position: 'absolute',
+        left: 10,
+        top: 10,
+    },
+    menuIcon: {
+        fontSize: 30,
+        color: '#fff',
+    },
+    menuItems: {
+        zIndex: 1,
+        position: 'absolute',
+        justifyContent: 'flex-start',
+        alignItems: 'baseline',
+        width: 250,
+        backgroundColor: '#EEE',
+    },
+    menuItem: {
+        flexDirection: 'row',
+        height: 50,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: '100%',
+        marginVertical: 3,
+        left: 20,
+    },
+    menuItemText: {
+        fontSize: 13,
+        left: 15
     },
 });
 export default CadastoPagamentoSccreen;

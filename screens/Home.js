@@ -1,8 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importação do FontAwesome
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
-const Home = ({ navigation }) => {
+const Home = ({  }) => {
+
+  const navigation = useNavigation(); // Use useNavigation hook to get navigation object
+
   const getLocation = () => {
     // Lógica para obter a localização do usuário
   };
@@ -43,10 +47,15 @@ const Home = ({ navigation }) => {
           <FontAwesome name="parking" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Estacionamentos Parceiros</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PagamentoFluxo')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SessionScreen')}>
           <FontAwesome name="plus" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Criar uma sessão</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Logout')}>
+          <FontAwesome name="faRightFromBracket" size={20} color="black" style={styles.icon} />
+          <Text style={styles.buttonText}>Logout</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );

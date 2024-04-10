@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
-import MenuHamburger from './menuHambuger';
+import MenuHamburger from './MenuHambuger';
 
 
 const CadastoVeiculoSccreen = ({ navigation }) => {

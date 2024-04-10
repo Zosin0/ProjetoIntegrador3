@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import MenuHamburger from './screens/menuHambuger';
+import MenuHamburger from './screens/MenuHambuger';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
 
@@ -18,9 +18,10 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={CadastoVeiculoSccreen} />
-        <Stack.Screen name="teste" component={MenuHamburger}/>
-        <Stack.Screen name="testes" component={CadastoPagamentoSccreen}/>
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Pagamento" component={CadastoPagamentoSccreen}/>
+        <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
+        <Stack.Screen name="Menu" component={MenuHamburger}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -34,8 +35,8 @@ const HomeScreen = ({ navigation }) => {
           <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('teste')}>teste</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('testes')}>testesss</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Veiculo')}>Cadastro Veiculo</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Pagamento')}>Cadastro Pagamento</Button>
         </View>
       </ImageBackground>
     </View>

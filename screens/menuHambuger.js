@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Entypo } from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/Entypo';
+import { useNavigation } from '@react-navigation/native';
 
 const MenuHamburger = () => {
+    const navigation = useNavigation();
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -24,15 +27,15 @@ const MenuHamburger = () => {
             {isMenuOpen && (
                 <View style={styles.menuItems}>
                     <Image source={require("../assets/images/logo.png")} style={styles.logo} />
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
                         <Icon name="home" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Pagamento')}>
                         <Icon name="wallet" size={20} color={'#FFD643'} />
-                        <Text style={styles.menuItemText}>Minhas formas de pagamento</Text>
+                        <Text style={styles.menuItemText}>Cadastrar formas de pagamento</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Veiculo')}>
                         <Icon name="traffic-cone" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Cadastrar veículo</Text>
                     </TouchableOpacity>
@@ -44,7 +47,7 @@ const MenuHamburger = () => {
                         <Icon name="users" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Meus perfis</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
                         <Icon name="cross" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Logout</Text>
                     </TouchableOpacity>

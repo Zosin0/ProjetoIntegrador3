@@ -8,6 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import MenuHamburger from './screens/MenuHambuger';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
+import Code from './screens/code';
 
 
 const Stack = createStackNavigator();
@@ -41,6 +42,7 @@ const App = () => {
         <Stack.Screen name="Pagamento" component={CadastoPagamentoSccreen}/>
         <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>
+        <Stack.Screen name="QRCode" component={Code}/>
         
       </Stack.Navigator>
     </NavigationContainer>
@@ -55,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
           <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Veiculo')}>Cadastro Veiculo</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('QRCode')}>Ler Qr Code</Button>
         </View>
       </ImageBackground>
     </View>

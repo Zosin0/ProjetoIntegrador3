@@ -8,6 +8,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import MenuHamburger from './screens/menuHambuger';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
+import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,7 @@ const App = () => {
       <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Register" component={CadastoVeiculoSccreen} />
         <Stack.Screen name="teste" component={MenuHamburger}/>
         <Stack.Screen name="testes" component={CadastoPagamentoSccreen}/>
       </Stack.Navigator>

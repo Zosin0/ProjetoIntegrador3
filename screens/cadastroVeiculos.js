@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
-
+import MenuHamburger from './menuHambuger';
 
 
 const CadastoVeiculoSccreen = ({ navigation }) => {
@@ -15,6 +15,7 @@ const CadastoVeiculoSccreen = ({ navigation }) => {
 
     return (
         <View style={styles.containerForm}>
+            <MenuHamburger></MenuHamburger>
             <View style={styles.container}>
                 <View style={styles.head}>
                     <Icon name="car" size={35} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
@@ -54,6 +55,8 @@ const styles = StyleSheet.create({
         
     },
     container: {
+        zIndex: -1,
+        top:-150,
         backgroundColor: '#E2E6EE',
         padding: 15,
         borderRadius: 20,

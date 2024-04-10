@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
         marginTop: 37,
     },
     header: {
+        flex: 1,
+        position: 'absolute',
         height: 60,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
+        left: -190,
         width: 250
     },
     headerText: {
@@ -88,10 +88,14 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     menuItems: {
+        position: 'absolute',
+        left: -190,
+        top: 50,
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'baseline',
         width: 250,
+        height: 800,
         backgroundColor: '#EEE',
     },
     menuItem: {

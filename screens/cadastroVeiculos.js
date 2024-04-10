@@ -3,6 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'reac
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
 import MenuHamburger from './MenuHambuger';
+import CenteredFooter from './Footer';
+
 
 
 const CadastoVeiculoSccreen = ({ navigation }) => {
@@ -41,6 +43,7 @@ const CadastoVeiculoSccreen = ({ navigation }) => {
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
+            <CenteredFooter/>
         </View>
     );
 }
@@ -52,7 +55,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
     },
     container: {
         zIndex: -1,
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         width: 300,
         elevation: 5,
+        marginBottom: -35
     },
     head: {
         alignItems: 'center',

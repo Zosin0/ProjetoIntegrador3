@@ -3,6 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, SafeAreaVie
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/Entypo'; // Importe o conjunto de ícones Ionicons
 import MenuHamburger from './MenuHambuger';
+import CenteredFooter from './Footer';
+
 
 const CadastoPagamentoSccreen = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -41,6 +43,7 @@ const CadastoPagamentoSccreen = ({ navigation }) => {
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
             </View>
+            <CenteredFooter/>
         </View>
     );
 }
@@ -61,6 +64,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         width: 300,
         elevation: 5,
+        marginBottom: -45
     },
     head: {
         alignItems: 'center',

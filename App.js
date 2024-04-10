@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { View, Image, StyleSheet, ImageBackground } from 'react-native';
 import { Button } from 'react-native-paper';
@@ -10,18 +9,39 @@ import MenuHamburger from './screens/MenuHambuger';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
 
+
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator: ({ current }) => ({
+            cardStyle: {
+              opacity: current.progress,
+              transform: [
+                {
+                  scale: current.progress.interpolate({
+                    inputRange: [1, 2],
+                    outputRange: [1, 1],
+                  }),
+                },
+              ],
+            },
+          }),
+          animationEnabled: true, // Habilita a animação
+        }}
+        initialRouteName="Home"
+      >
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Pagamento" component={CadastoPagamentoSccreen}/>
         <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -36,7 +56,6 @@ const HomeScreen = ({ navigation }) => {
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Veiculo')}>Cadastro Veiculo</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Pagamento')}>Cadastro Pagamento</Button>
         </View>
       </ImageBackground>
     </View>

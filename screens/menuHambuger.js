@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { Entypo } from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -12,6 +12,13 @@ const MenuHamburger = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('state', () => {
+            setIsMenuOpen(false);
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <SafeAreaView style={styles.containerMenu}>

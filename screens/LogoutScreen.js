@@ -1,11 +1,19 @@
 import React from 'react';
 import { Button, StyleSheet, View, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const LogoutScreen = ({  navigation, setIsUserLoggedIn }) => {
+
+const LogoutScreen = ({ setIsUserLoggedIn }) => {
+    const navigation = useNavigation(); // Use useNavigation hook to get navigation object
+
     const handleLogout = () => {
-        setIsUserLoggedIn(false);
+        AsyncStorage.removeItem('token').then(() => {
+            console.log('Token removido!');
+          });        
+          setIsUserLoggedIn(false);
         console.log('Usuário deslogado com sucesso');
-
+        navigation.navigate('HomeLoggedOut')
     };
 
     return (

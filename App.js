@@ -10,6 +10,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import SessionScreen from './screens/Session';
 import LogoutScreen from './screens/LogoutScreen';
 import MenuHamburger from './screens/menuHambuger';
+import MapScreen from './screens/MapScreen';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
 import Code from './screens/code';
@@ -74,6 +75,7 @@ const App = () => {
         <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>
         <Stack.Screen name="QRCode" component={Code}/>
+        <Stack.Screen name="Map" component={MapScreen}/>
 
       </Stack.Navigator>
     </NavigationContainer>

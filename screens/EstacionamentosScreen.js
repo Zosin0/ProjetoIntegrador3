@@ -11,7 +11,7 @@ const EstacionamentosScreen = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.8:5000/api/v1/estacionamentos');
+      const response = await axios.get('http://localhost:5000/api/v1/estacionamentos');
       const data = response.data;
       setEstacionamentos(data);
     } catch (error) {

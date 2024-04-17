@@ -7,7 +7,7 @@ const QRCodeScreen = () => {
 
   const handleGenerateQRCode = async () => {
     try {
-      const response = await axios.get('http://192.168.0.8:5000/api/qrcodes');
+      const response = await axios.get('http://localhost:5000/api/qrcodes');
       setQRCodeData(response.data);
     } catch (error) {
       console.error('Erro ao gerar QR code:', error);

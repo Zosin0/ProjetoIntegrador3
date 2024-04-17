@@ -1,25 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; // Importa os ícones do FontAwesome
 import QRCode from 'react-native-qrcode-svg';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 
 const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
     const [sessionData, setSessionData] = useState(null);
     const [vehicleLocation, setVehicleLocation] = useState(null);
+    const [token, setToken] = useState(null);
 
-    const startParkingSession = () => {
+    useEffect(() => {
+        // Função para carregar o token de autenticação armazenado localmente ao inicializar o componente
+        const loadToken = async () => {
+            try {
+                const token = await AsyncStorage.getItem('token');
+                setToken(token);
+            } catch (error) {
+                console.error('Erro ao carregar o token:', error);
+            }
+        };  
+
+        loadToken();
+    }, []);
+
+    const startParkingSession = async () => {
         const brazilDateTime = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
         setSessionData(brazilDateTime);
+    
+        try {
+            const response = await axios.post(
+                'http://localhost:5000/api/v1/salvarQRCode',
+                { brazilDateTime },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Adicione o token de autenticação ao cabeçalho da requisição
+                    }
+                }
+            );
+            const data = response.data;
+            if (data.success) {
+                console.log('QR Code salvo com sucesso:', data.message);
+                // Execute as ações necessárias após o sucesso
+            } else {
+                console.error('Erro ao salvar QR Code:', data.message);
+            }
+        } catch (error) {
+            console.error('Erro ao salvar QR Code:', error);
+        }
     };
-
+    
     const handleViewLocation = () => {
         // Se a localização do veículo ainda não foi definida, define-a
         if (!vehicleLocation) {
             getCurrentLocation();
-        } else {
-            navigation.navigate('Map', { vehicleLocation });
-        }
+        } 
+        //else {
+        //     navigation.navigate('Map', { vehicleLocation });
+        // }
     };
     
     const getCurrentLocation = async () => {

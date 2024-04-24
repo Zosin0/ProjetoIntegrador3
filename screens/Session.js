@@ -12,10 +12,10 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
     const [token, setToken] = useState(null);
 
     useEffect(() => {
-        // Função para carregar o token de autenticação armazenado localmente ao inicializar o componente
         const loadToken = async () => {
             try {
                 const token = await AsyncStorage.getItem('token');
+                
                 setToken(token);
             } catch (error) {
                 console.error('Erro ao carregar o token:', error);
@@ -25,7 +25,30 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
         loadToken();
     }, []);
 
+    const startPayment = async () => {    
+        try {
+            const response = await axios.get(
+                'http://localhost:5000/api/v1/pagarEstacionamento',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}` 
+                    }
+                }
+            );
+            const data = response.data;
+            if (data.success) {
+                navigation.navigate('PayStep')
+
+            } else {
+                console.error('Erro ao salvar QR Code:', data.message);
+            }
+        } catch (error) {
+            console.error('Erro ao salvar QR Code:', error);
+        }
+    };
+
     const startParkingSession = async () => {
+
         const brazilDateTime = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
         setSessionData(brazilDateTime);
     
@@ -41,6 +64,8 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
             );
             const data = response.data;
             if (data.success) {
+                await AsyncStorage.setItem('token', response.data.qr_code);
+
                 console.log('QR Code salvo com sucesso:', data.message);
                 // Execute as ações necessárias após o sucesso
             } else {
@@ -103,7 +128,7 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
             )}
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={() => console.log('Pagar estacionamento')}>
+                <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
                     <FontAwesomeIcon name="money" size={20} color="black" style={styles.icon} />
                     <Text style={styles.buttonText}>Pagar Estacionamento</Text>
                 </TouchableOpacity>

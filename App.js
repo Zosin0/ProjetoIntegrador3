@@ -13,6 +13,7 @@ import MenuHamburger from './screens/menuHambuger';
 //  import MapScreen from './screens/MapScreen';
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
+import PaySteps from './screens/Pay';
 import Code from './screens/code';
 
 const Stack = createStackNavigator();
@@ -75,6 +76,7 @@ const App = () => {
         <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>
         <Stack.Screen name="QRCode" component={Code}/>
+        <Stack.Screen name="PayStep" component={PaySteps}/>
         {/* <Stack.Screen name="Map" component={MapScreen}/> */}
 
       </Stack.Navigator>

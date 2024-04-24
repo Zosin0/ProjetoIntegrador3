@@ -35,15 +35,15 @@ const Home = ({  }) => {
         </TouchableOpacity>
 
         <Text style={styles.title}>Opções:</Text>
-        <TouchableOpacity style={styles.button} onPress={checkActiveSession}>
-          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} 
-          />
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PayStep')}>
+          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Pagar Ticket</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Pay')}
-        >
+          onPress={() => navigation.navigate('')}>
           <FontAwesome name="parking" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Estacionamentos Parceiros</Text>
         </TouchableOpacity>

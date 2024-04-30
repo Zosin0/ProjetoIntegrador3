@@ -19,6 +19,7 @@ const PaySteps = ({ navigation }) => {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
+
                     }
                 );
                 const data = response.data;
@@ -32,14 +33,45 @@ const PaySteps = ({ navigation }) => {
                 console.error('Erro ao obter dados do backend:', error);
             }
         };
-
         fetchData(); // Chamar a função de busca de dados ao carregar a tela
     }, []);
 
-    const finalizarPagamento = () => {
-        // Lógica para finalizar o pagamento
-        console.log("Pagamento finalizado");
+    const finalizarPagamento = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            const response = await axios.post(
+                'http://localhost:5000/api/v1/pagarEstacionamento',
+                { valor: valorAPagar },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+        
+            const data = response.data;
+            if (data.success) {
+                AsyncStorage.setItem('token');
+                console.log(AsyncStorage.getItem('token'));
+                navigation.navigate('HomeLoggedIn');
+            } else {
+                console.error('Erro 1231:', data.message);
+            }
+        } catch (error) {
+            console.error('Erro 789456:', error);
+        }
     };
+    
+ 
+    // Logic to transform tempoPermanencia in hours if it exceeds 60 minutes
+    let formattedTempoPermanencia = tempoPermanencia;
+    if (formattedTempoPermanencia > 60) {
+        const hours = Math.floor(formattedTempoPermanencia / 60);
+        const minutes = formattedTempoPermanencia % 60;
+        formattedTempoPermanencia = `${hours} horas`;
+    } else {
+        formattedTempoPermanencia = `${formattedTempoPermanencia} minutos`;
+    }
 
     return (
         <View style={styles.container}>
@@ -48,7 +80,9 @@ const PaySteps = ({ navigation }) => {
 
             <View style={styles.infoContainer}>
                 <Text style={styles.infoText}>Valor a ser pago: R$ {valorAPagar}</Text>
-                <Text style={styles.infoText}>Tempo de permanência: {tempoPermanencia} horas</Text>
+
+                <Text style={styles.infoText}>Tempo de permanência: {formattedTempoPermanencia}</Text>
+
             </View>
 
             <TouchableOpacity style={styles.button} onPress={finalizarPagamento}>

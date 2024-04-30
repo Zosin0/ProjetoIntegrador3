@@ -15,23 +15,22 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
         const loadToken = async () => {
             try {
                 const token = await AsyncStorage.getItem('token');
-                
+
                 setToken(token);
             } catch (error) {
                 console.error('Erro ao carregar o token:', error);
             }
-        };  
-
+        };
         loadToken();
     }, []);
 
-    const startPayment = async () => {    
+    const startPayment = async () => {
         try {
             const response = await axios.get(
                 'http://localhost:5000/api/v1/pagarEstacionamento',
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` 
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
@@ -48,10 +47,9 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
     };
 
     const startParkingSession = async () => {
-
-        const brazilDateTime = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+        const brazilDateTime = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
         setSessionData(brazilDateTime);
-    
+
         try {
             const response = await axios.post(
                 'http://localhost:5000/api/v1/salvarQRCode',
@@ -71,21 +69,23 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
             } else {
                 console.error('Erro ao salvar QR Code:', data.message);
             }
+
+
         } catch (error) {
             console.error('Erro ao salvar QR Code:', error);
         }
     };
-    
+
     const handleViewLocation = () => {
         // Se a localização do veículo ainda não foi definida, define-a
         if (!vehicleLocation) {
             getCurrentLocation();
-        } 
+        }
         //else {
         //     navigation.navigate('Map', { vehicleLocation });
         // }
     };
-    
+
     const getCurrentLocation = async () => {
         try {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -93,7 +93,7 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
                 console.error('Permissão de localização negada');
                 return;
             }
-    
+
             let location = await Location.getCurrentPositionAsync({});
             const currentLocation = {
                 latitude: location.coords.latitude,
@@ -105,7 +105,8 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
             console.error('Erro ao obter a localização:', error);
         }
     };
-    
+
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/images/logo.png')} style={styles.logo} />
@@ -120,25 +121,36 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
                 </View>
             ) : (
                 <>
-                    <TouchableOpacity style={styles.button} onPress={startParkingSession}>
-                        <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
-                        <Text style={styles.buttonText}>Iniciar Sessão</Text>
-                    </TouchableOpacity>
+                    {!token && (
+                        <TouchableOpacity style={styles.button} onPress={startParkingSession}>
+                            <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
+                            <Text style={styles.buttonText}>Iniciar Sessão</Text>
+                        </TouchableOpacity>
+                    )}
                 </>
             )}
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
-                    <FontAwesomeIcon name="money" size={20} color="black" style={styles.icon} />
-                    <Text style={styles.buttonText}>Pagar Estacionamento</Text>
-                </TouchableOpacity>
+                {token && (
+                    <>
+                         <TouchableOpacity style={styles.button} onPress={startParkingSession}>
+                            <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
+                            <Text style={styles.buttonText}>Iniciar Sessão</Text>
+                        </TouchableOpacity>
+                            
+                        <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
+                            <FontAwesomeIcon name="money" size={20} color="black" style={styles.icon} />
+                            <Text style={styles.buttonText}>Pagar Estacionamento</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, styles.blackButton]} onPress={handleViewLocation}>
-                    <FontAwesomeIcon name="map-marker" size={20} color="white" style={styles.icon} />
-                    <Text style={[styles.buttonText, { color: 'white' }]}>
-                        {vehicleLocation ? 'Ver Localização do Carro' : 'Registrar Localização do Meu Veículo'}
-                    </Text>
-                </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, styles.blackButton]} onPress={handleViewLocation}>
+                            <FontAwesomeIcon name="map-marker" size={20} color="white" style={styles.icon} />
+                            <Text style={[styles.buttonText, { color: 'white' }]}>
+                                {vehicleLocation ? 'Ver Localização do Carro' : 'Registrar Localização do Meu Veículo'}
+                            </Text>
+                        </TouchableOpacity>
+                    </>
+                )}
             </View>
         </View>
     );

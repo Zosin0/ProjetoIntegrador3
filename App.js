@@ -11,6 +11,8 @@ import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
 import Code from './screens/code';
 import localizarCarro from './screens/localizarCarro';
 import FormasDePagamento from './screens/formasDePagamento';
+import RegistrarLocalizacao from './screens/registrarLocalizacao';
+import MinhasFormas from './screens/minhasFormas';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +48,8 @@ const App = () => {
         <Stack.Screen name="QRCode" component={Code}/>
         <Stack.Screen name="localizarCarro" component={localizarCarro}/>
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
+        <Stack.Screen name="RegistrarLocalizacao" component={RegistrarLocalizacao}/>
+        <Stack.Screen name="MinhasFormas" component={MinhasFormas}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -59,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
           <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('localizarCarro')}>localizarCarro</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('MinhasFormas')}>MinhasFormas</Button>
         </View>
       </ImageBackground>
     </View>

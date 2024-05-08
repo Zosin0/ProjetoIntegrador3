@@ -8,7 +8,7 @@ import CenteredFooter from './Footer';
 
 
 
-const FormasDePagamento = ({ navigation }) => {
+const MinhasFormas = ({ navigation }) => {
 
     return (
         <View style={styles.containerForm}>
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
 });
-export default FormasDePagamento;
+export default MinhasFormas;

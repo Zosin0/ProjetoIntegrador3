@@ -18,7 +18,7 @@ const LogoutScreen = ({ setIsUserLoggedIn }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('/assets/images/logo.png')} style={styles.logo} />
+            <Image source={require('../assets/images/logo.png')} style={styles.logo} />
             <Button title="Logout" onPress={handleLogout} style={styles.button} />
         </View>
     );

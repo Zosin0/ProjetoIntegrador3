@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
-import MenuHamburger from './MenuHamburger';
-import CenteredFooter from './Footer';
+import MenuHamburger from '../components/MenuHamburger';
+import CenteredFooter from '../components/Footer';
 
 
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importação do FontAwesome
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
-import MenuHamburger from './MenuHamburger';
-import CenteredFooter from './Footer';
+import MenuHamburger from '../components/MenuHamburger';
+import CenteredFooter from '../components/Footer';
 
 const Home = ({  }) => {
 

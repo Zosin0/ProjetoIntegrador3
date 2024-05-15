@@ -3,9 +3,8 @@ import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'reac
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
 import MenuHamburger from './MenuHambuger';
-import CenteredFooter from './Footer';
+import CenteredFooter from '../components/Footer';
 import MapView from 'react-native-maps';
-
 
 
 const RegistrarLocalizacao = ({ navigation }) => {

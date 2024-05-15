@@ -1,44 +1,44 @@
+// Tela
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import axios from 'axios';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Importe o conjunto de ícones Ionicons
-import MenuHamburger from './MenuHamburger';
-import CenteredFooter from './Footer';
+import Icon from 'react-native-vector-icons/Entypo';
+import MenuHamburger from '../components/MenuHamburger';
+import CenteredFooter from '../components/Footer';
 
-
-
-const CadastoVeiculoSccreen = ({ navigation }) => {
+const CadastroPagamentoScreen = ({ navigation }) => {
     const [name, setName] = useState('');
-    const [placa, setPlaca] = useState('');
-    const [marca, setMarca] = useState('');
-    const [Modelo, setModelo] = useState('');
-    const [ano, setAno] = useState('');
+    const [cartao, setCartao] = useState('');
+    const [validade, setValidade] = useState('');
+    const [cvv, setCvv] = useState('');
+    const [cep, setCep] = useState('');
     const [complemento, setComplemento] = useState('');
-
     return (
         <View style={styles.containerForm}>
             <MenuHamburger></MenuHamburger>
             <View style={styles.container}>
                 <View style={styles.head}>
-                    <Icon name="car" size={35} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
-                    <Text style={{fontWeight: 'bold', fontSize: 15}}>Cadastrar Carro</Text>
+                    <Icon name="user" size={55} color={'#FFD643'} children={<Text style={styles.sla}></Text>} />
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>informações de Pagamento</Text>
                 </View>
-                <Text>Apelido</Text>
-                <TextInput style={styles.input} placeholder="apelido" value={name} onChangeText={setName} />
-                <Text> Placa </Text>
-                <TextInput style={styles.input} placeholder='XXXXXXX' value={placa} onChange={setPlaca} />
+                <Text>Nome Completo</Text>
+                <TextInput style={styles.input} placeholder="Nome Completo" value={name} onChangeText={setName} />
+                <Text> Número do Cartão </Text>
+                <TextInput style={styles.input} placeholder='1234 1234 1234 1234' value={cartao} onChange={setCartao} />
                 <View style={styles.containerValidade}>
                     <View style={styles.box}>
-                        <Text> Marca </Text>
-                        <TextInput style={styles.inputDiferente} placeholder='XXXXXXXX' value={marca} onChange={setMarca} />
+                        <Text> Validade </Text>
+                        <TextInput style={styles.inputDiferente} placeholder='MM/YY' value={validade} onChange={setValidade} />
                     </View>
                     <View style={styles.box}>
-                        <Text> Modelo </Text>
-                        <TextInput style={styles.inputDiferente} placeholder='***' value={Modelo} onChange={setModelo} />
+                        <Text> CVV </Text>
+                        <TextInput style={styles.inputDiferente} placeholder='***' value={cvv} onChange={setCvv} />
                     </View>
                 </View>
-                <Text> Ano </Text>
-                <TextInput style={styles.input} placeholder='MM/YY' value={ano} onChange={setAno} />
+                <Text> CEP de cobrança </Text>
+                <TextInput style={styles.input} placeholder='00000-000' value={cep} onChange={setCep} />
+                <Text> Complemento/ Número </Text>
+                <TextInput style={styles.input} placeholder='00000-000' value={complemento} onChange={setComplemento} />
                 <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
     },
     container: {
         zIndex: -1,
-        top:-150,
+        top:-110,
         backgroundColor: '#E2E6EE',
         padding: 15,
         borderRadius: 20,
         width: 300,
         elevation: 5,
-        marginBottom: -35
+        marginBottom: -45
     },
     head: {
         alignItems: 'center',
@@ -105,10 +105,10 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#FCE77B',
-        paddingVertical: 5,
+        paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginBottom: 25,
+        marginBottom: 35,
         marginTop: 10,
         width: '100%'
     },
@@ -117,5 +117,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'center'
     },
+
 });
-export default CadastoVeiculoSccreen;
+
+export default CadastroPagamentoScreen;

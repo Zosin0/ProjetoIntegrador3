@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importação do FontAwesome
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import MenuHamburger from './MenuHamburger';
+import CenteredFooter from './Footer';
 
 const Home = ({  }) => {
 
@@ -21,9 +23,10 @@ const Home = ({  }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} />
+      {/* <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} /> */}
 
       <View style={styles.content}>
+      <MenuHamburger></MenuHamburger>,
         <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
         <Text style={styles.title}>Você no estacionamento:</Text>
 
@@ -35,15 +38,15 @@ const Home = ({  }) => {
         </TouchableOpacity>
 
         <Text style={styles.title}>Opções:</Text>
-        <TouchableOpacity style={styles.button} onPress={checkActiveSession}>
-          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} 
-          />
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PayStep')}>
+          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Pagar Ticket</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Pay')}
-        >
+          onPress={() => navigation.navigate('')}>
           <FontAwesome name="parking" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Estacionamentos Parceiros</Text>
         </TouchableOpacity>
@@ -55,7 +58,7 @@ const Home = ({  }) => {
           <FontAwesome name="faRightFromBracket" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
-
+        <CenteredFooter/>
       </View>
     </View>
   );

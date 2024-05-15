@@ -9,10 +9,16 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import SessionScreen from './screens/Session';
 import LogoutScreen from './screens/LogoutScreen';
-import MenuHamburger from './screens/menuHambuger';
+import MenuHamburger from './screens/MenuHamburger';
+
 import CadastoPagamentoSccreen from './screens/cadastroPagamento';
 import CadastoVeiculoSccreen from './screens/cadastroVeiculos';
+import PaySteps from './screens/Pay';
 import Code from './screens/code';
+
+ // MUDANÇAS Rod
+//import localizarCarro from './screens/localizarCarro';
+import FormasDePagamento from './screens/formasDePagamento';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +29,6 @@ const App = () => {
   useEffect(() => {
     const checkAuthentication = async () => {
       const token = await AsyncStorage.getItem('token');
-      console.log(token);
       if (token) {
         setIsUserLoggedIn(true);
       }
@@ -74,6 +79,11 @@ const App = () => {
         <Stack.Screen name="Veiculo" component={CadastoVeiculoSccreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>
         <Stack.Screen name="QRCode" component={Code}/>
+        <Stack.Screen name="PayStep" component={PaySteps}/>
+
+        {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
+        <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
+
 
       </Stack.Navigator>
     </NavigationContainer>
@@ -88,6 +98,10 @@ const HomeScreen = ({ navigation }) => {
           <Image source={require("./assets/images/logo.png")} style={styles.logo} />
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Login')}>Login</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Register')}>Registre-se</Button>
+
+          {/* MUDANÇAS ROD*/}
+
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Veiculo')}>localizarCarro</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('QRCode')}>Ler Qr Code</Button>
         </View>
       </ImageBackground>

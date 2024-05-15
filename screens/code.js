@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import MenuHamburger from './menuHambuger';
+import MenuHamburger from './MenuHamburger';
 import CenteredFooter from './Footer';
 
 

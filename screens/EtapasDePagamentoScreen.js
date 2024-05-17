@@ -75,7 +75,7 @@ const PaySteps = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image source={require('/assets/images/logo.png')} style={styles.logo} />
+            <Image source={require('../assets/images/logo.png')} style={styles.logo} />
             <Text style={styles.title}>Fluxo de Pagar</Text>
 
             <View style={styles.infoContainer}>

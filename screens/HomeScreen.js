@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons'; // Importação do FontAwesome
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import MenuHamburger from '../components/MenuHamburger';
+import CenteredFooter from '../components/Footer';
 
 const Home = ({  }) => {
 
@@ -21,9 +23,10 @@ const Home = ({  }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} />
+      {/* <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} /> */}
 
       <View style={styles.content}>
+      <MenuHamburger></MenuHamburger>,
         <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
         <Text style={styles.title}>Você no estacionamento:</Text>
 
@@ -55,7 +58,7 @@ const Home = ({  }) => {
           <FontAwesome name="faRightFromBracket" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
-
+        <CenteredFooter/>
       </View>
     </View>
   );

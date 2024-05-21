@@ -10,7 +10,6 @@ import RegisterScreen from './screens/RegisterScreen';
 import SessionScreen from './screens/SessionScreen';
 import LogoutScreen from './screens/LogoutScreen';
 import MenuHamburger from './components/MenuHamburger';
-
 import CadastroPagamentoScreen from './screens/CadastroPagamentoScreen';
 import CadastroVeiculoScreen from './screens/CadastroVeiculoScreen';
 import PaySteps from './screens/EtapasDePagamentoScreen';

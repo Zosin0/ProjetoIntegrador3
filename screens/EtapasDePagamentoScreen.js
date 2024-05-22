@@ -51,8 +51,9 @@ const PaySteps = ({ navigation }) => {
         
             const data = response.data;
             if (data.success) {
-                AsyncStorage.setItem('token');
+                AsyncStorage.setItem('token', response.data.token);
                 console.log(AsyncStorage.getItem('token'));
+                console.log("É FACIL FABRICAR PAPEL")
                 navigation.navigate('HomeLoggedIn');
             } else {
                 console.error('Erro 1231:', data.message);

@@ -15,7 +15,7 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
         const loadToken = async () => {
             try {
                 const token = await AsyncStorage.getItem('token');
-
+                console.log(token)
                 setToken(token);
             } catch (error) {
                 console.error('Erro ao carregar o token:', error);
@@ -49,23 +49,22 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
     const startParkingSession = async () => {
         const brazilDateTime = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
         setSessionData(brazilDateTime);
-
+        console.log(token)
         try {
             const response = await axios.post(
                 'http://localhost:5000/api/v1/salvarQRCode',
                 { brazilDateTime },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}` // Adicione o token de autenticação ao cabeçalho da requisição
+                        Authorization: `Bearer ${token}`
                     }
                 }
             );
             const data = response.data;
             if (data.success) {
                 await AsyncStorage.setItem('token', response.data.qr_code);
-
                 console.log('QR Code salvo com sucesso:', data.message);
-                // Execute as ações necessárias após o sucesso
+                navigation.navigate('HomeLoggedIn')
             } else {
                 console.error('Erro ao salvar QR Code:', data.message);
             }
@@ -138,10 +137,10 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
                             <Text style={styles.buttonText}>Iniciar Sessão</Text>
                         </TouchableOpacity>
                             
-                        <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
+                        {/* <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
                             <FontAwesomeIcon name="money" size={20} color="black" style={styles.icon} />
                             <Text style={styles.buttonText}>Pagar Estacionamento</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
                         <TouchableOpacity style={[styles.button, styles.blackButton]} onPress={handleViewLocation}>
                             <FontAwesomeIcon name="map-marker" size={20} color="white" style={styles.icon} />

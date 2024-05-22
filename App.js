@@ -14,10 +14,12 @@ import CadastroPagamentoScreen from './screens/CadastroPagamentoScreen';
 import CadastroVeiculoScreen from './screens/CadastroVeiculoScreen';
 import PaySteps from './screens/EtapasDePagamentoScreen';
 import Code from './components/code';
+import SessaoDeEstacionamento from './screens/sessaoDeEstacionamento';
 
  // MUDANÇAS Rod
 //import localizarCarro from './screens/localizarCarro';
 import FormasDePagamento from './screens/FormasDePagamentoScreen';
+import SessaoEstacionamentoQrCode from './screens/sessaoEstacionamentoQrCode';
 
 const Stack = createStackNavigator();
 
@@ -79,6 +81,8 @@ const App = () => {
         <Stack.Screen name="QRCode" component={Code}/>
         <Stack.Screen name="PayStep" component={PaySteps}/>
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
+        <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/>
+        <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
         {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isUserLoggedIn ? 'HomeLoggedIn' : 'HomeLoggedOut'}> */}
       </Stack.Navigator>
@@ -97,8 +101,8 @@ const HomeScreen = ({ navigation }) => {
 
           {/* MUDANÇAS ROD*/}
 
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('Veiculo')}>Cadastros</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('QRCode')}>Ler Qr Code</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoDeEstacionamento')}>sessaoDeEstacionamento</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button>
         </View>
       </ImageBackground>
     </View>

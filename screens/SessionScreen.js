@@ -5,6 +5,9 @@ import QRCode from 'react-native-qrcode-svg';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
+import MenuHamburger from '../components/MenuHamburger';
+import CenteredFooter from '../components/Footer';
+
 
 const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
     const [sessionData, setSessionData] = useState(null);
@@ -107,107 +110,124 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
 
 
     return (
-        <View style={styles.container}>
-            <Image source={require('../assets/images/logo.png')} style={styles.logo} />
-            <Text style={styles.title}>Sessão de Estacionamento</Text>
+        <View style={styles.containerForm}>
+            <MenuHamburger></MenuHamburger>
+            <View style={styles.container}>
+                <Image source={require('../assets/images/logo.png')} style={styles.logo} />
+                <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'center', marginTop: 20 }}>Sessão de Estacionamento</Text>
 
-            {sessionData ? (
-                <View style={styles.qrCodeContainer}>
-                    <QRCode
-                        value={sessionData}
-                        size={250}
-                    />
-                </View>
-            ) : (
-                <>
-                    {!token && (
-                        <TouchableOpacity style={styles.button} onPress={startParkingSession}>
-                            <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
-                            <Text style={styles.buttonText}>Iniciar Sessão</Text>
-                        </TouchableOpacity>
-                    )}
-                </>
-            )}
-
-            <View style={styles.buttonContainer}>
-                {token && (
+                {sessionData ? (
+                    <View style={styles.qrCodeContainer}>
+                        <QRCode
+                            value={sessionData}
+                            size={250}
+                        />
+                    </View>
+                ) : (
                     <>
-                         <TouchableOpacity style={styles.button} onPress={startParkingSession}>
-                            <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
-                            <Text style={styles.buttonText}>Iniciar Sessão</Text>
-                        </TouchableOpacity>
-                            
-                        {/* <TouchableOpacity style={[styles.button, styles.yellowButton]} onPress={startPayment}>
-                            <FontAwesomeIcon name="money" size={20} color="black" style={styles.icon} />
-                            <Text style={styles.buttonText}>Pagar Estacionamento</Text>
-                        </TouchableOpacity> */}
-
-                        <TouchableOpacity style={[styles.button, styles.blackButton]} onPress={handleViewLocation}>
-                            <FontAwesomeIcon name="map-marker" size={20} color="white" style={styles.icon} />
-                            <Text style={[styles.buttonText, { color: 'white' }]}>
-                                {vehicleLocation ? 'Ver Localização do Carro' : 'Registrar Localização do Meu Veículo'}
-                            </Text>
-                        </TouchableOpacity>
+                        {!token && (
+                            <TouchableOpacity style={styles.buttonBlack} onPress={startParkingSession}>
+                                <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
+                                <Text style={styles.buttonTextBlack}>Iniciar Sessão</Text>
+                            </TouchableOpacity>
+                        )}
                     </>
                 )}
+
+                <View style={styles.containerForma}>
+                    {token && (
+                        <>
+                            <TouchableOpacity style={styles.buttonBlack} onPress={startParkingSession}>
+                                <FontAwesomeIcon name="car" size={20} color="white" style={styles.icon} />
+                                <Text style={styles.buttonTextBlack}>Iniciar Sessão</Text>
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity style={[styles.button, styles.blackButton]} onPress={handleViewLocation}>
+                                <FontAwesomeIcon name="map-marker" size={20} color="black" style={styles.icon} />
+                                <Text style={[styles.buttonText]}>
+                                    {vehicleLocation ? 'Ver Localização do Carro' : 'Registrar Localização do Meu Veículo'}
+                                </Text>
+                            </TouchableOpacity>
+
+                        </>
+                    )}
+                </View>
+                <CenteredFooter/>
             </View>
         </View>
+
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
     logo: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         resizeMode: 'contain',
         marginBottom: 50,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
+    containerForma: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    container: {
+        zIndex: -1,
+        backgroundColor: '#EEEEEE',
+        borderRadius: 20,
+        width: '100%',
+        height: 600,
+        alignItems: 'center'
+    },
+    containerForma: {
+        height: 480,
+        width: 300,
+    },
+    formaPagamento: {
+        flex: 1,
+        justifyContent: "space-around",
+        flexDirection: "row",
+        alignItems: 'center',
+        margin: 5,
+        backgroundColor: '#9f9f9f',
+        borderRadius: 5,
+        marginTop: 40,
+        width: 200,
+        alignSelf: 'center'
     },
     button: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        padding: 15,
+        backgroundColor: '#FDDF76',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 5,
-        marginBottom: 20,
-        width: 250,
-    },
-    yellowButton: {
-        backgroundColor: '#FFD643',
-    },
-    blackButton: {
-        backgroundColor: '#000',
+        marginTop: 50,
+        width: '100%',
+        flexDirection: 'row'
     },
     buttonText: {
+        color: 'black',
+        fontSize: 20,
+        alignContent: 'center',  
+        marginLeft: 50
+    },
+    buttonTextBlack: {
         color: 'white',
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginLeft: 10,
+        fontSize: 20,
+        alignContent: 'center',  
+        marginLeft: 50
     },
-    icon: {
-        marginRight: 10,
-    },
-    buttonContainer: {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+    buttonBlack: {
+        backgroundColor: 'black',
+        color: 'white',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        marginTop: 50,
         width: '100%',
-        marginTop: 20,
+        flexDirection: 'row'
     },
-    qrCodeContainer: {
-        alignItems: 'center',
-        marginTop: 20,
-    },
-});
+});1
 
 export default SessionScreen;

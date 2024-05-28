@@ -13,13 +13,12 @@ import MenuHamburger from './components/MenuHamburger';
 import CadastroPagamentoScreen from './screens/CadastroPagamentoScreen';
 import CadastroVeiculoScreen from './screens/CadastroVeiculoScreen';
 import PaySteps from './screens/EtapasDePagamentoScreen';
-import Code from './components/code';
-// import SessaoDeEstacionamento from './screens/ztela - sessao: modificada';
-
- // MUDANÇAS Rod
-//import localizarCarro from './screens/localizarCarro';
 import FormasDePagamento from './screens/FormasDePagamentoScreen';
 import SessaoEstacionamentoQrCode from './screens/sessaoEstacionamentoQrCode';
+import Code from './components/code';
+import MapScreen from './screens/MapScreen';
+// import localizarCarro from './screens/localizarCarro';
+// import SessaoDeEstacionamento from './screens/ztela - sessao: modificada';
 
 const Stack = createStackNavigator();
 
@@ -82,6 +81,7 @@ const App = () => {
         <Stack.Screen name="PayStep" component={PaySteps}/>
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
         <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
+        <Stack.Screen name="Map" component={MapScreen} />
         {/* <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/> */}
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
         {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isUserLoggedIn ? 'HomeLoggedIn' : 'HomeLoggedOut'}> */}

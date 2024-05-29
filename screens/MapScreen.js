@@ -20,7 +20,7 @@ const MapScreen = () => {
   }, []);
 
   const generateMapUrl = (latitude, longitude) => {
-    return `https://www.google.com/maps/embed/v1/view?key=AIzaSyBetTEVFbh__xVtKrgBjZ5JaTCbnRcml40&center=${latitude},${longitude}&zoom=15`;
+    return `https://www.google.com/maps/embed/v1/view?key=&center=${latitude},${longitude}&zoom=15`;
   };
 
   return (

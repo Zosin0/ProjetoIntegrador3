@@ -12,7 +12,7 @@ const CenteredFooter = () => {
             <TouchableOpacity style={styles.leftButton} onPress={() => navigation.navigate('Pagamento')}>
                 <Icon name="credit-card" size={25} color="#fff" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.centerButton} onPress={() => navigation.navigate('HomeLoggedOut')}>
+            <TouchableOpacity style={styles.centerButton} onPress={() => navigation.navigate('HomeLoggedIn')}>
                 <Icon name="home" size={25} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.rightButton} onPress={() => navigation.navigate('Veiculo')}>

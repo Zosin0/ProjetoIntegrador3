@@ -13,14 +13,13 @@ import MenuHamburger from './components/MenuHamburger';
 import CadastroPagamentoScreen from './screens/CadastroPagamentoScreen';
 import CadastroVeiculoScreen from './screens/CadastroVeiculoScreen';
 import PaySteps from './screens/EtapasDePagamentoScreen';
-import Code from './components/code';
-import SessaoDeEstacionamento from './screens/sessaoDeEstacionamento';
-
- // MUDANÇAS Rod
-//import localizarCarro from './screens/localizarCarro';
 import FormasDePagamento from './screens/FormasDePagamentoScreen';
 import SessaoEstacionamentoQrCode from './screens/sessaoEstacionamentoQrCode';
 import Home2 from './screens/home2';
+import Code from './components/code';
+import MapScreen from './screens/MapScreen';
+// import localizarCarro from './screens/localizarCarro';
+// import SessaoDeEstacionamento from './screens/ztela - sessao: modificada';
 
 const Stack = createStackNavigator();
 
@@ -82,9 +81,10 @@ const App = () => {
         <Stack.Screen name="QRCode" component={Code}/>
         <Stack.Screen name="PayStep" component={PaySteps}/>
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
-        <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/>
         <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
         <Stack.Screen name="home2" component={Home2}/>
+        <Stack.Screen name="Map" component={MapScreen} />
+        {/* <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/> */}
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
         {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isUserLoggedIn ? 'HomeLoggedIn' : 'HomeLoggedOut'}> */}
       </Stack.Navigator>
@@ -105,6 +105,7 @@ const HomeScreen = ({ navigation }) => {
 
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('home2')}>Home</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button>
+          {/* <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button> */}
         </View>
       </ImageBackground>
     </View>

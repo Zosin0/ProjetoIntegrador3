@@ -43,7 +43,11 @@ const Home = ({  }) => {
           <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
           <Text style={styles.buttonText}>Pagar Ticket</Text>
         </TouchableOpacity>
-
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>
+          <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
+          <Text style={styles.buttonText}>Pagar Ticket 2</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate('')}>
@@ -84,8 +88,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
     resizeMode: 'contain',
     marginBottom: 50,
   },
@@ -98,17 +102,18 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#7CBB78',
+    backgroundColor: '#FDDF76',
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
     width: '100%',
   },
   buttonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
+
   },
   icon: {
     marginRight: 10,

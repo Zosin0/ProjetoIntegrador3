@@ -1,70 +1,52 @@
-// import React from 'react';
-// import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-// import MapView, { Marker } from 'react-native-maps';
-// import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; // Importa os ícones do FontAwesome
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { WebView } from 'react-native-webview';
+import * as Location from 'expo-location';
 
-// const MapScreen = ({ route, navigation }) => {
-//     const { vehicleLocation } = route.params;
+const MapScreen = () => {
+  const [location, setLocation] = useState(null);
 
-//     const handleGoBack = () => {
-//         navigation.goBack();
-//     };
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permission to access location was denied');
+        return;
+      }
 
-//     return (
-//         <View style={styles.container}>
-//             <MapView
-//                 style={styles.map}
-//                 initialRegion={{
-//                     latitude: vehicleLocation.latitude,
-//                     longitude: vehicleLocation.longitude,
-//                     latitudeDelta: 0.01,
-//                     longitudeDelta: 0.01,
-//                 }}
-//             >
-//                 {vehicleLocation && (
-//                     <Marker
-//                         coordinate={{ latitude: vehicleLocation.latitude, longitude: vehicleLocation.longitude }}
-//                         title="Localização do Veículo"
-//                     >
-//                         <FontAwesomeIcon name="car" size={30} color="#FFD643" />
-//                     </Marker>
-//                 )}
-//             </MapView>
-//             <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-//                 <FontAwesomeIcon name="arrow-left" size={20} color="#FFD643" />
-//             </TouchableOpacity>
-//             <Text style={styles.text}>Localização do Veículo</Text>
-//         </View>
-//     );
-// };
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+    })();
+  }, []);
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     map: {
-//         width: '100%',
-//         height: '70%',
-//     },
-//     text: {
-//         position: 'absolute',
-//         bottom: 10,
-//         backgroundColor: 'white',
-//         padding: 10,
-//         borderRadius: 5,
-//         elevation: 3,
-//     },
-//     backButton: {
-//         position: 'absolute',
-//         top: 50,
-//         left: 20,
-//         backgroundColor: '#000',
-//         padding: 10,
-//         borderRadius: 50,
-//         elevation: 3,
-//     },
-// });
+  const generateMapUrl = (latitude, longitude) => {
+    return `https://www.google.com/maps/embed/v1/view?key=&center=${latitude},${longitude}&zoom=15`;
+  };
 
-// export default MapScreen;
+  return (
+    <View style={styles.container}>
+      {location ? (
+        <WebView
+          style={styles.webview}
+          source={{ uri: generateMapUrl(location.latitude, location.longitude) }}
+        />
+      ) : (
+        <Text>Carregando mapa...</Text>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  webview: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+});
+
+export default MapScreen;

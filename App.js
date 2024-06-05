@@ -20,6 +20,7 @@ import SessaoDeEstacionamento from './screens/sessaoDeEstacionamento';
 //import localizarCarro from './screens/localizarCarro';
 import FormasDePagamento from './screens/FormasDePagamentoScreen';
 import SessaoEstacionamentoQrCode from './screens/sessaoEstacionamentoQrCode';
+import Home2 from './screens/home2';
 
 const Stack = createStackNavigator();
 
@@ -83,6 +84,7 @@ const App = () => {
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
         <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/>
         <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
+        <Stack.Screen name="home2" component={Home2}/>
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
         {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isUserLoggedIn ? 'HomeLoggedIn' : 'HomeLoggedOut'}> */}
       </Stack.Navigator>
@@ -101,7 +103,7 @@ const HomeScreen = ({ navigation }) => {
 
           {/* MUDANÇAS ROD*/}
 
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoDeEstacionamento')}>sessaoDeEstacionamento</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('home2')}>Home</Button>
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button>
         </View>
       </ImageBackground>

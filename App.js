@@ -18,6 +18,7 @@ import SessaoEstacionamentoQrCode from './screens/sessaoEstacionamentoQrCode';
 import Home2 from './screens/home2';
 import Code from './components/code';
 import MapScreen from './screens/MapScreen';
+import PaymentConfirmation from './screens/ConfirmacaoPagamento';
 // import localizarCarro from './screens/localizarCarro';
 // import SessaoDeEstacionamento from './screens/ztela - sessao: modificada';
 
@@ -80,10 +81,12 @@ const App = () => {
         <Stack.Screen name="Menu" component={MenuHamburger}/>
         <Stack.Screen name="QRCode" component={Code}/>
         <Stack.Screen name="PayStep" component={PaySteps}/>
+        <Stack.Screen name="PaymentConfirmation" component={PaymentConfirmation} />
         <Stack.Screen name="FormasDePagamento" component={FormasDePagamento}/>
         <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
         <Stack.Screen name="home2" component={Home2}/>
         <Stack.Screen name="Map" component={MapScreen} />
+
         {/* <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/> */}
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
         {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={isUserLoggedIn ? 'HomeLoggedIn' : 'HomeLoggedOut'}> */}

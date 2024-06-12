@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   containerHeader: {
     borderRadius: 20,
     left: -80,
+    color: 'black', 
   },
   voltar: {
     width: 200,
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
   input: {
     width: '110%',
     marginBottom: 20,
+    color: 'black',
     padding: 5,
     borderWidth: 1,
     borderColor: '#999999',
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     width: 170,
   },
   buttonText: {
-    color: '#212529',
+    color: '#b',
     fontSize: 18,
     textAlign: 'center',
   },

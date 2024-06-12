@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity, Modal } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRCode from 'react-native-qrcode-svg';
@@ -10,6 +10,7 @@ const PaySteps = () => {
   const [tempoPermanencia, setTempoPermanencia] = useState(0);
   const [showQRCode, setShowQRCode] = useState(false);
   const [qrCodeData, setQrCodeData] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const PaySteps = () => {
   }, []);
 
   const finalizarPagamento = async () => {
+    setLoading(true);
     try {
       const token = await AsyncStorage.getItem('token');
       const response = await axios.post(
@@ -57,13 +59,37 @@ const PaySteps = () => {
 
       const data = response.data;
       if (data.success) {
-        setQrCodeData(data.qr_code);
-        setShowQRCode(true);
+        // Redireciona o usuário para a URL do pagamento
+        window.location.href = data.payment_url;
+        // Espera a confirmação do pagamento
+        await checkPaymentStatus();
+        setLoading(false);
       } else {
         console.error('Erro ao finalizar pagamento:', data.message);
+        setLoading(false);
       }
     } catch (error) {
       console.error('Erro ao finalizar pagamento:', error);
+      setLoading(false);
+    }
+  };
+
+  const checkPaymentStatus = async () => {
+    // Verifica o status do pagamento periodicamente
+    let paymentConfirmed = false;
+    while (!paymentConfirmed) {
+      try {
+        const response = await axios.get('http://localhost:5000/api/v1/pagamentoConfirmado');
+        const data = response.data;
+        if (data.success) {
+          paymentConfirmed = true;
+          setQrCodeData(data.qr_code);
+          navigation.navigate('Home'); // Navega para a tela de estacionamento
+        }
+      } catch (error) {
+        console.error('Erro ao verificar status do pagamento:', error);
+      }
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Aguarda 5 segundos antes de verificar novamente
     }
   };
 
@@ -81,8 +107,9 @@ const PaySteps = () => {
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Map')}>
         <Text style={styles.buttonText}>Ver Localização do Carro</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={finalizarPagamento}>
+      <TouchableOpacity style={styles.button} onPress={finalizarPagamento} disabled={loading}>
         <Text style={styles.buttonText}>Finalizar Estacionamento</Text>
+        {loading && <ActivityIndicator size="small" color="#fff" />}
       </TouchableOpacity>
 
       {showQRCode && (
@@ -133,13 +160,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFD700',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 5,
     marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  buttonText: {
+  buttonText:{
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',

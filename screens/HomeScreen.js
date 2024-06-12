@@ -1,36 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome icons
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import MenuHamburger from '../components/MenuHamburger';
 import CenteredFooter from '../components/Footer';
+import QRCode from 'react-native-qrcode-svg';
 
 const Home = () => {
-  const navigation = useNavigation(); // Use useNavigation hook to get navigation object
-
-  const [name, setName] = useState('');
-  const [placa, setPlaca] = useState('');
-  const [marca, setMarca] = useState('');
-  const [Modelo, setModelo] = useState('');
-  const [ano, setAno] = useState('');
-  const [complemento, setComplemento] = useState('');
-
-  const getLocation = () => {
-    // Lógica para obter a localização do usuário
-  };
-
-  const checkActiveSession = () => {
-    // Lógica para verificar se existe uma sessão de estacionamento ativa
-  };
-
-  const readTicket = () => {
-    // Lógica para ler o ticket de estacionamento
-  };
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { qrCode } = route.params || {}; // Obtenha o QR code dos parâmetros da rota
 
   return (
-
     <ScrollView contentContainerStyle={styles.container}>
-      <MenuHamburger></MenuHamburger>
+      <MenuHamburger />
       <View style={styles.topBar}>
         <Text style={styles.headerText}>Localização</Text>
         <Icon name="map-marker" size={18} color="#000" />
@@ -47,10 +30,11 @@ const Home = () => {
         <Text style={styles.entryTimeText}>Horário de Entrada</Text>
         <Text style={styles.dateText}>30/04/2024</Text>
         <Text style={styles.timeText}>19:24</Text>
-        <Image
-          style={styles.qrCode}
-          source={require('../assets/images/qrcode.png')}
-        />
+        {qrCode ? (
+          <QRCode value={qrCode} size={200} />
+        ) : (
+          <Image style={styles.qrCode} source={require('../assets/images/qrcode.png')} />
+        )}
         <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('PayStep')}>
           <Text style={styles.payButtonText}>Pagar</Text>
         </TouchableOpacity>
@@ -64,10 +48,7 @@ const Home = () => {
         </View>
         <View style={styles.carsList}>
           <View style={styles.carItem}>
-            <Image
-              style={styles.carIcon}
-              source={require('../assets/images/carro.png')}
-            />
+            <Image style={styles.carIcon} source={require('../assets/images/carro.png')} />
             <Text style={styles.carText}>Meu veículo PDT9J23</Text>
             <Icon name="check-circle" size={18} color="#4CAF50" style={styles.carCheckIcon} />
           </View>
@@ -83,7 +64,7 @@ const Home = () => {
           <Text style={styles.mapButtonText}>Ver no mapa</Text>
         </TouchableOpacity>
       </View>
-      <CenteredFooter/>
+      <CenteredFooter />
     </ScrollView>
   );
 };

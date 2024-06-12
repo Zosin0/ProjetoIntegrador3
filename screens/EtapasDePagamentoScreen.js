@@ -4,6 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRCode from 'react-native-qrcode-svg';
 import { useNavigation } from '@react-navigation/native';
+import { WebView } from 'react-native-webview';
 
 const PaySteps = () => {
   const [valorAPagar, setValorAPagar] = useState(0);
@@ -11,13 +12,15 @@ const PaySteps = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [qrCodeData, setQrCodeData] = useState('');
   const [loading, setLoading] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState(null);
+
   const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/v1/pagarEstacionamento', {
+        const response = await axios.get('http://192.168.0.34:5000/api/v1/pagarEstacionamento', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -48,7 +51,7 @@ const PaySteps = () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/v1/pagarEstacionamento',
+        'http://192.168.0.34:5000/api/v1/pagarEstacionamento',
         { valor: valorAPagar },
         {
           headers: {
@@ -59,11 +62,7 @@ const PaySteps = () => {
 
       const data = response.data;
       if (data.success) {
-        // Redireciona o usuário para a URL do pagamento
-        window.location.href = data.payment_url;
-        // Espera a confirmação do pagamento
-        await checkPaymentStatus();
-        setLoading(false);
+        setPaymentUrl(data.payment_url);
       } else {
         console.error('Erro ao finalizar pagamento:', data.message);
         setLoading(false);
@@ -75,21 +74,27 @@ const PaySteps = () => {
   };
 
   const checkPaymentStatus = async () => {
-    // Verifica o status do pagamento periodicamente
-    let paymentConfirmed = false;
-    while (!paymentConfirmed) {
-      try {
-        const response = await axios.get('http://localhost:5000/api/v1/pagamentoConfirmado');
-        const data = response.data;
-        if (data.success) {
-          paymentConfirmed = true;
-          setQrCodeData(data.qr_code);
-          navigation.navigate('Home'); // Navega para a tela de estacionamento
-        }
-      } catch (error) {
-        console.error('Erro ao verificar status do pagamento:', error);
+    try {
+      const response = await axios.get('http://192.168.0.34:5000/api/v1/pagamentoConfirmado');
+      const data = response.data;
+      if (data.success) {
+        setQrCodeData(data.qr_code);
+        setShowQRCode(true);
+        setLoading(false);
+        navigation.navigate('Home', { qrCode: data.qr_code }); // Navega para a tela inicial com o QR code
       }
-      await new Promise(resolve => setTimeout(resolve, 5000)); // Aguarda 5 segundos antes de verificar novamente
+    } catch (error) {
+      console.error('Erro ao verificar status do pagamento:', error);
+      setLoading(false);
+    }
+  };
+
+  const handleNavigationStateChange = (navState) => {
+    if (navState.url.includes('pagamentoConfirmado')) {
+      setPaymentUrl(null);
+      checkPaymentStatus();
+    } else if (navState.url === 'about:blank' || navState.url === 'about:srcdoc') {
+      setPaymentUrl(null);
     }
   };
 
@@ -111,7 +116,16 @@ const PaySteps = () => {
         <Text style={styles.buttonText}>Finalizar Estacionamento</Text>
         {loading && <ActivityIndicator size="small" color="#fff" />}
       </TouchableOpacity>
-
+      {paymentUrl && (
+        <Modal visible onRequestClose={() => setPaymentUrl(null)}>
+          <WebView
+            source={{ uri: paymentUrl }}
+            onNavigationStateChange={handleNavigationStateChange}
+            startInLoadingState
+            renderLoading={() => <ActivityIndicator size="large" color="#0000ff" />}
+          />
+        </Modal>
+      )}
       {showQRCode && (
         <Modal
           animationType="slide"
@@ -168,7 +182,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  buttonText:{
+  buttonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',

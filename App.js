@@ -19,6 +19,7 @@ import Home2 from './screens/home2';
 import Code from './components/code';
 import MapScreen from './screens/MapScreen';
 import PaymentConfirmation from './screens/ConfirmacaoPagamento';
+import HistoricoPagamento from './screens/historicoPagamento';
 // import localizarCarro from './screens/localizarCarro';
 // import SessaoDeEstacionamento from './screens/ztela - sessao: modificada';
 
@@ -86,6 +87,7 @@ const App = () => {
         <Stack.Screen name="sessaoEstacionamentoQrCode" component={SessaoEstacionamentoQrCode}/>
         <Stack.Screen name="home2" component={Home2}/>
         <Stack.Screen name="Map" component={MapScreen} />
+        <Stack.Screen name="historico" component={HistoricoPagamento} />
 
         {/* <Stack.Screen name="sessaoDeEstacionamento" component={SessaoDeEstacionamento}/> */}
         {/* <Stack.Screen name="localizarCarro" component={localizarCarro}/> */}
@@ -107,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
           {/* MUDANÇAS ROD*/}
 
           <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('home2')}>Home</Button>
-          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button>
+          <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('historico')}>historico</Button>
           {/* <Button mode="contained" style={styles.button} labelStyle={styles.buttonText} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>sessaoEstacionamentoQrCode</Button> */}
         </View>
       </ImageBackground>

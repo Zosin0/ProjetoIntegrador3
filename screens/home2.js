@@ -10,20 +10,19 @@ import CenteredFooter from '../components/Footer';
 
 
 const Home2 = ({ navigation }) => {
-    const [name, setName] = useState('');
-    const [placa, setPlaca] = useState('');
-    const [marca, setMarca] = useState('');
-    const [Modelo, setModelo] = useState('');
-    const [ano, setAno] = useState('');
-    const [complemento, setComplemento] = useState('');
+
 
     return (
         <View style={styles.containerForm}>
             <MenuHamburger></MenuHamburger>
             <View style={styles.container}>
                 <View style={styles.topo}>
-                    <button style={styles.topoButton1}>Pagar</button>
-                    <button style={styles.topoButton2}>Criar sessão</button>
+                    <TouchableOpacity style={styles.topoButton1} onPress={() => navigation.navigate('Veiculo')}>
+                        <Text>Pagar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.topoButton2} onPress={() => navigation.navigate('Veiculo')}>
+                        <Text>Pagar</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.corpocima}>
                     <View>
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     },
     container: {
         zIndex: -1,
-        top: -200,
+        top: -130,
         backgroundColor: '#E2E6EE',
         padding: 15,
         borderRadius: 20,

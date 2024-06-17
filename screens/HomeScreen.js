@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -9,34 +9,33 @@ import QRCode from 'react-native-qrcode-svg';
 const Home = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { qrCode } = route.params || {}; // Obtenha o QR code dos parâmetros da rota
+  const [qrCode, setQrCode] = useState(null);
+  //const { qrCode } = route.params || {}; // Obtenha o QR code dos parâmetros da rota
+
+  useEffect(() => {
+    if (route.params?.qrCode) {
+      setQrCode(route.params.qrCode);
+    }
+  }, [route.params?.qrCode]);
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MenuHamburger />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Home Screen</Text>
+      {qrCode && <QRCode value={qrCode} />}
+    </View>
       <View style={styles.topBar}>
         <Text style={styles.headerText}>Localização</Text>
         <Icon name="map-marker" size={18} color="#000" />
-      </View>
-      <View style={styles.topButtons}>
-        <TouchableOpacity style={styles.topButton}>
-          <Text style={styles.topButtonText}>Pagar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.topButton} onPress={() => navigation.navigate('SessionScreen')}>
-          <Text style={styles.topButtonText}>Criar Sessão</Text>
-        </TouchableOpacity>
       </View>
       <View style={styles.qrSection}>
         <Text style={styles.entryTimeText}>Horário de Entrada</Text>
         <Text style={styles.dateText}>30/04/2024</Text>
         <Text style={styles.timeText}>19:24</Text>
-        {qrCode ? (
-          <QRCode value={qrCode} size={200} />
-        ) : (
-          <Image style={styles.qrCode} source={require('../assets/images/qrcode.png')} />
-        )}
-        <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('PayStep')}>
-          <Text style={styles.payButtonText}>Pagar</Text>
+        <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('SessionScreen')}>
+          <Text style={styles.payButtonText}>Criar Sessão</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.myCarsSection}>

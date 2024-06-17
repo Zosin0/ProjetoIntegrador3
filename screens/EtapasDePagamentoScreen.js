@@ -79,9 +79,9 @@ const PaySteps = () => {
       const data = response.data;
       if (data.success) {
         setQrCodeData(data.qr_code);
-        setShowQRCode(true);
+        //setShowQRCode(true);
         setLoading(false);
-        navigation.navigate('Home', { qrCode: data.qr_code }); // Navega para a tela inicial com o QR code
+        navigation.navigate('HomeLoggedIn', { qrCode: data.qr_code }); // Navega para a tela inicial com o QR code
       }
     } catch (error) {
       console.error('Erro ao verificar status do pagamento:', error);
@@ -155,10 +155,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   logo: {
-    width: 200,
-    height: 200,
+    width: 200, // Adjust as needed
+    height: 200, // Adjust as needed
     resizeMode: 'contain',
     marginBottom: 50,
+
   },
   title: {
     fontSize: 24,

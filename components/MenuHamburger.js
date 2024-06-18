@@ -34,7 +34,7 @@ const MenuHamburger = () => {
             {isMenuOpen && (
                 <View style={styles.menuItems}>
                     <Image source={require("../assets/images/logo.png")} style={styles.logo} />
-                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('HomeLoggedIn')}>
                         <Icon name="home" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Home</Text>
                     </TouchableOpacity>
@@ -66,7 +66,7 @@ const MenuHamburger = () => {
 
 const styles = StyleSheet.create({
     logo: {
-        position: 'relative',
+        position: 'absolute',
         top: -50,
         left: 150,
         width: 80,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         alignItems: 'baseline',
         width: 250,
         height: 800,
-        backgroundColor: '#EEE',
+        backgroundColor: 'white',
     },
     menuItem: {
         flexDirection: 'row',

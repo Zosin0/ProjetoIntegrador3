@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Home from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import EstacionamentosScreen from './screens/EstacionamentosScreen';
 import SessionScreen from './screens/SessionScreen';
 import LogoutScreen from './screens/LogoutScreen';
 import MenuHamburger from './components/MenuHamburger';
@@ -76,6 +77,7 @@ const App = () => {
         <Stack.Screen name="Logout" component={() =><LogoutScreen setIsUserLoggedIn={setIsUserLoggedIn} />}/>
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="SessionScreen" component={SessionScreen} />
+        <Stack.Screen name="EstacionamentosScreen" component={EstacionamentosScreen} />
         <Stack.Screen name="Pagamento" component={CadastroPagamentoScreen}/>
         <Stack.Screen name="Veiculo" component={CadastroVeiculoScreen}/>
         <Stack.Screen name="Menu" component={MenuHamburger}/>

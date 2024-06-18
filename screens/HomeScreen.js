@@ -1,69 +1,152 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MenuHamburger from '../components/MenuHamburger';
 import CenteredFooter from '../components/Footer';
 import QRCode from 'react-native-qrcode-svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Home = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const [qrCode, setQrCode] = useState(null);
-  //const { qrCode } = route.params || {}; // Obtenha o QR code dos parâmetros da rota
+  const [vehicleLocation, setVehicleLocation] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isQrCodeRead, setIsQrCodeRead] = useState(false);
+  const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
+    fetchVehicles();
+    const loadToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        setToken(token);
+      } catch (error) {
+        console.error('Erro ao carregar o token:', error);
+      }
+    };
+    loadToken();
+
+
     if (route.params?.qrCode) {
       setQrCode(route.params.qrCode);
+      setIsQrCodeRead(false);
     }
   }, [route.params?.qrCode]);
 
+  const handleReadQrCode = () => {
+    setIsQrCodeRead(true);
+  };
+
+
+
+  const fetchVehicles = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.34:5000/api/v1/veiculo');
+      setVehicles(response.data.vehicles);
+    } catch (error) {
+      console.error('Error fetching vehicles:', error);
+    }
+  };
+
+  const handleViewLocation = () => {
+    if (!vehicleLocation) {
+      getCurrentLocation();
+    }
+  };
+
+  const getCurrentLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.error('Permissão de localização negada');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const currentLocation = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setVehicleLocation(currentLocation);
+      navigation.navigate('Map', { vehicleLocation: currentLocation });
+    } catch (error) {
+      console.error('Erro ao obter a localização:', error);
+    }
+  };
+
+
+  const startParkingSession = async () => {
+    const brazilDateTime = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+    try {
+      const response = await axios.post(
+        'http://192.168.0.34:5000/api/v1/salvarQRCode',
+        { brazilDateTime },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      const data = response.data;
+      if (data.success) {
+        await AsyncStorage.setItem('token', response.data.qr_code);
+        navigation.navigate('PayStep'); // Navega para a tela de estacionamento
+      } else {
+        console.error('Erro ao iniciar sessão:', data.message);
+      }
+    } catch (error) {
+      console.error('Erro ao iniciar sessão:', error);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <MenuHamburger />
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-      {qrCode && <QRCode value={qrCode} />}
-    </View>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Bem-vindo ao Park&Pay</Text>
+        {!isQrCodeRead && qrCode && (
+          <>
+            <QRCode value={qrCode} size={150} style={styles.qrCode} />
+            <TouchableOpacity style={styles.readButton} onPress={handleReadQrCode}>
+              <Text style={styles.readButtonText}>Simular Leitura do QR Code</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
       <View style={styles.topBar}>
-        <Text style={styles.headerText}>Localização</Text>
+        <Text style={styles.headerText}>Você está no estacionamento { }</Text>
         <Icon name="map-marker" size={18} color="#000" />
       </View>
       <View style={styles.qrSection}>
-        <Text style={styles.entryTimeText}>Horário de Entrada</Text>
-        <Text style={styles.dateText}>30/04/2024</Text>
-        <Text style={styles.timeText}>19:24</Text>
-        <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('SessionScreen')}>
+        <TouchableOpacity style={styles.payButton} onPress={() => startParkingSession()}>
           <Text style={styles.payButtonText}>Criar Sessão</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.myCarsSection}>
-        <View style={styles.myCarsHeader}>
-          <Text style={styles.myCarsTitle}>Meus Carros</Text>
-          <TouchableOpacity>
-            <Text style={styles.manageText}>Gerenciar</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.carsList}>
-          <View style={styles.carItem}>
-            <Image style={styles.carIcon} source={require('../assets/images/carro.png')} />
-            <Text style={styles.carText}>Meu veículo PDT9J23</Text>
-            <Icon name="check-circle" size={18} color="#4CAF50" style={styles.carCheckIcon} />
+
+      <View style={styles.vehiclesSection}>
+        <Text style={styles.vehiclesTitle}>Meus Carros</Text>
+        {vehicles.map((vehicle) => (
+          <View key={vehicle.id} style={styles.vehicleItem}>
+            <Image style={styles.vehicleIcon} source={require('../assets/images/carro.png')} />
+            <Text style={styles.vehicleText}>{vehicle.name} - {vehicle.placa}</Text>
           </View>
-          <TouchableOpacity style={styles.addCarItem}>
-            <Icon name="plus" size={24} color="#000" />
-            <Text style={styles.addCarText}>Adicionar Carro</Text>
-          </TouchableOpacity>
-        </View>
+        ))}
+        <TouchableOpacity style={styles.addVehicleButton} onPress={() => navigation.navigate('Veiculo')}>
+          <Icon name="plus" size={24} color="#000" />
+          <Text style={styles.addVehicleText}>Adicionar Carro</Text>
+        </TouchableOpacity>
       </View>
+
       <View style={styles.partnersSection}>
         <Text style={styles.partnersTitle}>Estacionamentos Parceiros</Text>
-        <TouchableOpacity style={styles.mapButton}>
+        <TouchableOpacity style={styles.mapButton} onPress={() => navigation.navigate('Map')}>
           <Text style={styles.mapButtonText}>Ver no mapa</Text>
         </TouchableOpacity>
       </View>
-      <CenteredFooter />
+      {/* <CenteredFooter /> */}
     </ScrollView>
   );
 };
@@ -71,64 +154,66 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: 16,
+    padding: 2,
     backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 10,
   },
   topBar: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 20,
-    paddingRight: 20,
+    marginBottom: 50,
   },
   headerText: {
-    fontSize: 14,
-    fontWeight: '400',
+    fontSize: 18,
+    fontWeight: '600',
     marginRight: 8,
-  },
-  topButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    paddingHorizontal: 16,
-  },
-  topButton: {
-    backgroundColor: '#EEEEEE',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 25,
-  },
-  topButtonText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333333',
   },
   qrSection: {
     alignItems: 'center',
     marginBottom: 20,
   },
   entryTimeText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#888888',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#555',
     marginBottom: 4,
   },
   dateText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#888888',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#555',
     marginBottom: 4,
   },
   timeText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: '#888888',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#555',
     marginBottom: 12,
   },
   qrCode: {
-    width: 200,
-    height: 200,
     marginBottom: 16,
+  },
+  readButton: {
+    backgroundColor: '#007BFF',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  readButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFF',
   },
   payButton: {
     backgroundColor: '#FFD700',
@@ -137,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   payButtonText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: '#000',
   },
@@ -146,6 +231,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 10,
     marginBottom: 20,
+    width: '100%',
   },
   myCarsHeader: {
     flexDirection: 'row',
@@ -153,12 +239,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   myCarsTitle: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#333333',
+    color: '#333',
   },
   manageText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#007BFF',
   },
   carsList: {
@@ -183,9 +269,9 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   carText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
-    color: '#333333',
+    color: '#333',
   },
   carCheckIcon: {
     marginLeft: 'auto',
@@ -202,9 +288,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   addCarText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
-    color: '#333333',
+    color: '#333',
     marginLeft: 8,
   },
   partnersSection: {
@@ -213,11 +299,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderColor: '#E0E0E0',
     borderWidth: 1,
+    width: '100%',
+    alignItems: 'center',
   },
   partnersTitle: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#333333',
+    color: '#333',
     marginBottom: 12,
   },
   mapButton: {
@@ -227,58 +315,61 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   mapButtonText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: '#000',
   },
-  topoButton1: {
-    borderRadius: 50,
-    padding: 10,
+  vehiclesSection: {
+    width: '100%',
+    padding: 16,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 10,
+    marginBottom: 20,
   },
+  vehiclesTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 12,
+  },
+  vehicleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 8,
+    borderRadius: 10,
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  vehicleIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  vehicleText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+  },
+  addVehicleButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+    padding: 8,
+    borderRadius: 10,
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
+    marginTop: 10,
+  },
+  addVehicleText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#333',
+    marginLeft: 8,
+  },
+
 });
 
 export default Home;
-
-
-    // <View style={styles.container}>
-    //   {/* <Image source={require('../assets/images/background1.png')} style={styles.backgroundImage} /> */}
-    //   <View style={styles.content}>
-    //   <MenuHamburger></MenuHamburger>,
-    //     <Image source={require('../assets/images/logo.png')} style={styles.logo}/>
-    //     <Text style={styles.title}>Você no estacionamento:</Text>
-    
-    //     <TouchableOpacity style={styles.button} onPress={getLocation}>
-    //       <FontAwesome name="location-arrow" size={20} color="black" style={styles.icon} 
-    //       onPress={() => navigation.navigate('')}
-    //       />
-    //       <Text style={styles.buttonText}>Pegar Localização</Text>
-    //     </TouchableOpacity>
-    
-    //     <Text style={styles.title}>Opções:</Text>
-    
-    //     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PayStep')}>
-    //       <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
-    //       <Text style={styles.buttonText}>Pagar Ticket</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('sessaoEstacionamentoQrCode')}>
-    //       <FontAwesome name="ticket" size={20} color="black" style={styles.icon} />
-    //       <Text style={styles.buttonText}>Pagar Ticket 2</Text>
-    //     </TouchableOpacity>
-    
-    //     <TouchableOpacity
-    //       style={styles.button}
-    //       onPress={() => navigation.navigate('')}>
-    //       <FontAwesome name="parking" size={20} color="black" style={styles.icon} />
-    //       <Text style={styles.buttonText}>Estacionamentos Parceiros</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SessionScreen')}>
-    //       <FontAwesome name="plus" size={20} color="black" style={styles.icon} />
-    //       <Text style={styles.buttonText}>Criar uma sessão</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Logout')}>
-    //       <FontAwesome name="faRightFromBracket" size={20} color="black" style={styles.icon} />
-    //       <Text style={styles.buttonText}>Logout</Text>
-    //     </TouchableOpacity>
-    //     <CenteredFooter/>
-    //   </View>
-    // </View>

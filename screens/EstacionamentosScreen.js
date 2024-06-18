@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const EstacionamentosScreen = () => {
   const [estacionamentos, setEstacionamentos] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     fetchData();
@@ -11,7 +13,7 @@ const EstacionamentosScreen = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/v1/estacionamentos');
+      const response = await axios.get('http://192.168.0.34:5000/api/v1/estacionamentos');
       const data = response.data;
       setEstacionamentos(data);
     } catch (error) {
@@ -33,6 +35,9 @@ const EstacionamentosScreen = () => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
       />
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>Voltar</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -40,6 +45,8 @@ const EstacionamentosScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 50,
+    marginTop: 50,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -54,6 +61,18 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
+  },
+  backButton: {
+    backgroundColor: '#FFD700',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  backButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000',
   },
 });
 

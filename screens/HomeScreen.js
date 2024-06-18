@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MenuHamburger from '../components/MenuHamburger';
 import CenteredFooter from '../components/Footer';
@@ -44,7 +44,7 @@ const Home = () => {
 
   const fetchVehicles = async () => {
     try {
-      const response = await axios.get('http://192.168.0.34:5000/api/v1/veiculo');
+      const response = await axios.get('https://parknpay.zoser.me/api/v1/veiculo');
       setVehicles(response.data.vehicles);
     } catch (error) {
       console.error('Error fetching vehicles:', error);
@@ -82,7 +82,7 @@ const Home = () => {
     const brazilDateTime = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
     try {
       const response = await axios.post(
-        'http://192.168.0.34:5000/api/v1/salvarQRCode',
+        'https://parknpay.zoser.me/api/v1/salvarQRCode',
         { brazilDateTime },
         {
           headers: {

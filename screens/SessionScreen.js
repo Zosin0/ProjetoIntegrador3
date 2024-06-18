@@ -27,7 +27,7 @@ const SessionScreen = ({ navigation, setIsUserLoggedIn }) => {
         const brazilDateTime = new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
         try {
             const response = await axios.post(
-                'http://192.168.0.34:5000/api/v1/salvarQRCode',
+                'https://parknpay.zoser.me/api/v1/salvarQRCode',
                 { brazilDateTime },
                 {
                     headers: {

@@ -16,7 +16,7 @@ const LoginScreen = ({ setIsUserLoggedIn }) => {
   const handleLogin = async () => {
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/login', { email, password });
+      const response = await axios.post('https://parknpay.zoser.me/api/v1/login', { email, password });
       const data = response.data;
       if (data.success) {
         console.log('Usuário autenticado com sucesso:', data.message);

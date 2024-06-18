@@ -7,7 +7,7 @@
 
 //   const handleGenerateQRCode = async () => {
 //     try {
-//       const response = await axios.get('http://localhost:5000/api/qrcodes');
+//       const response = await axios.get('https://parknpay.zoser.me/api/qrcodes');
 //       setQRCodeData(response.data);
 //     } catch (error) {
 //       console.error('Erro ao gerar QR code:', error);

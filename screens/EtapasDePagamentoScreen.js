@@ -20,7 +20,7 @@ const PaySteps = () => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const response = await axios.get('http://192.168.0.34:5000/api/v1/pagarEstacionamento', {
+        const response = await axios.get('https://parknpay.zoser.me/api/v1/pagarEstacionamento', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -51,7 +51,7 @@ const PaySteps = () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const response = await axios.post(
-        'http://192.168.0.34:5000/api/v1/pagarEstacionamento',
+        'https://parknpay.zoser.me/api/v1/pagarEstacionamento',
         { valor: valorAPagar },
         {
           headers: {
@@ -75,7 +75,7 @@ const PaySteps = () => {
 
   const checkPaymentStatus = async () => {
     try {
-      const response = await axios.get('http://192.168.0.34:5000/api/v1/pagamentoConfirmado');
+      const response = await axios.get('https://parknpay.zoser.me/api/v1/pagamentoConfirmado');
       const data = response.data;
       if (data.success) {
         setQrCodeData(data.qr_code);

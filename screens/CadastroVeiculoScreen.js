@@ -14,7 +14,7 @@ const CadastroVeiculoScreen = ({ navigation }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://192.168.0.34:5000/api/v1/veiculo', {
+            const response = await axios.post('https://parknpay.zoser.me/api/v1/veiculo', {
                 name, placa, marca, modelo, ano
             });
             if (response.data.success) {

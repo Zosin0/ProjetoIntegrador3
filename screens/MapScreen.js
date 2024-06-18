@@ -36,7 +36,7 @@ const MapScreen = () => {
 
   const fetchVehicles = async () => {
     try {
-      const response = await axios.get('http://192.168.0.34:5000/api/v1/veiculo');
+      const response = await axios.get('https://parknpay.zoser.me/api/v1/veiculo');
       setVehicles(response.data.vehicles);
     } catch (error) {
       console.error('Error fetching vehicles:', error);
@@ -45,7 +45,7 @@ const MapScreen = () => {
 
   const fetchEstacionamentos = async () => {
     try {
-      const response = await axios.get('http://192.168.0.34:5000/api/v1/estacionamentos');
+      const response = await axios.get('https://parknpay.zoser.me/api/v1/estacionamentos');
       setEstacionamentos(response.data);
     } catch (error) {
       console.error('Error fetching estacionamentos:', error);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import { Entypo } from 'react-native-vector-icons';
-import Icon from 'react-native-vector-icons/Entypo';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 const MenuHamburger = () => {
@@ -54,7 +54,7 @@ const MenuHamburger = () => {
                         <Icon name="users" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Meus perfis</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Home')}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Logout')}>
                         <Icon name="cross" size={20} color={'#FFD643'} />
                         <Text style={styles.menuItemText}>Logout</Text>
                     </TouchableOpacity>

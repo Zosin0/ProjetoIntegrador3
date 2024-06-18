@@ -20,7 +20,7 @@ const RegisterScreen = ({  }) => {
         return;
       }
 
-      const response = await axios.post('http://localhost:5000/api/v1/register', { email, password });
+      const response = await axios.post('https://parknpay.zoser.me/api/v1/register', { email, password });
       const data = response.data;
       if (data.success) {
         navigation.navigate('Login')

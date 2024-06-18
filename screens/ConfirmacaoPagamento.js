@@ -11,7 +11,7 @@ const PaymentConfirmation = () => {
     try {
       const token = await AsyncStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:5000/api/v1/pagamentoConfirmado',
+        'https://parknpay.zoser.me/api/v1/pagamentoConfirmado',
         { valor: valorAPagar },
         {
           headers: {
